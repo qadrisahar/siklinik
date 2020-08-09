@@ -208,6 +208,10 @@ $route['a_tindakan/hapus'] = 'a/a_tindakan/hapus';
 $route['a_tindakan/proses_to_kasir'] = 'a/a_tindakan/proses_to_kasir';
 /*End  tindakan*/
 
+/* pembayaran*/
+$route['a_pembayaran'] = 'a/a_pembayaran';
+/*End  pembayaran*/
+
 /*Pembayaran Belum Dieksekusi*/
 $route['a_pembayaran_neks'] = 'a/a_pembayaran_neks';
 $route['a_pembayaran_neks/get_pembayaran_neks'] = 'a/a_pembayaran_neks/get_pembayaran_neks';

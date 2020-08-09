@@ -39,7 +39,9 @@ class Search_data extends CI_Controller {
 			$tables=$this->db->get();
 			$output='';
 			$i=1;
+			$total=0;
 			foreach($tables->result() as $dt) {
+				$total+=$dt->total;
 				$output.='<tr>';
 				$output.='<td class="text-center">'.$i++.'</td>';
 				$output.='<td>'.$dt->kode_obat.'</td>';
@@ -52,6 +54,7 @@ class Search_data extends CI_Controller {
 				$output.='</tr>';
 			}
 			$table['table']=$output;
+			$table['total']=toRp($total);
 	        
 	        echo json_encode($table);
 		}
@@ -64,7 +67,9 @@ class Search_data extends CI_Controller {
 			$tables=$this->db->get();
 			$output='';
 			$i=1;
+			$total=0;
 			foreach($tables->result() as $dt) {
+				$total+=$dt->total;
 				$output.='<tr>';
 				$output.='<td class="text-center">'.$i++.'</td>';
 				$output.='<td>'.$dt->tindakan_khusus.'</td>';
@@ -73,6 +78,7 @@ class Search_data extends CI_Controller {
 				$output.='</tr>';
 			}
 			$table['table']=$output;
+			$table['total']=toRp($total);
 	        
 	        echo json_encode($table);
 		}
@@ -85,7 +91,9 @@ class Search_data extends CI_Controller {
 			$tables=$this->db->get();
 			$output='';
 			$i=1;
+			$total=0;
 			foreach($tables->result() as $dt) {
+				$total+=$dt->total;
 				$output.='<tr>';
 				$output.='<td class="text-center">'.$i++.'</td>';
 				$output.='<td>'.$dt->lainlain.'</td>';
@@ -94,6 +102,7 @@ class Search_data extends CI_Controller {
 				$output.='</tr>';
 			}
 			$table['table']=$output;
+			$table['total']=toRp($total);
 	        
 	        echo json_encode($table);
 	    }

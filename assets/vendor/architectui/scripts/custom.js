@@ -135,7 +135,7 @@ function loadPageInner(x){
   
   function removeSeparator(Num){
     x=Num.replace(/\./g,'');
-    return x;
+    return (x);
   }
   
   
