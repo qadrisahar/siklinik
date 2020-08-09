@@ -1,0 +1,176 @@
+/* Made with love by Mutiullah Samim*/
+
+/* @import url('https://fonts.googleapis.com/css?family=Numans'); */
+
+html,body{
+/* background-color: #fcee06; */
+/* background-image: linear-gradient(315deg, #fcee06 0%, #fcee06 74%); */
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: 'open-sans';
+color:#000 !important;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: #FFF !important;
+border-radius: 31px !important;
+box-shadow: 0px 0px 8px 4px #0000001f;
+}
+
+.dark-color{
+    color: #292c2a;
+} 
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+color: #60a306;
+}
+
+.social_icon span:hover{
+color: white;
+cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #60a306;
+color: #fff;
+border:0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+color: #000;
+}
+
+.remember input
+{
+width: 20px;
+height: 20px;
+margin-left: 15px;
+margin-right: 5px;
+}
+
+.login_btn{
+color: #fff;
+background-color: #007743;
+width: 100%;
+}
+
+.login_btn:hover{
+color: #fff;
+background-color: #03b567;
+}
+
+.logo-text{
+    font-weight: 900;
+    font-size: 27pt;
+}
+
+.logo-text .text-a{
+    color: #60a306;
+}
+
+.logo-text .text-b{
+    color: #007743;
+}
+
+.logo-text .text-c{
+    color: #000000
+}
+
+.links{
+color: #908e8e;
+}
+
+.links a{
+margin-left: 4px;
+text-decoration: none;
+color:#525151;
+}
+
+.links a:hover{
+    text-decoration: none;
+    color:#60a306;
+    }
+
+.logo{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.logo img{
+    width: 110px;
+}
+
+.daftar{
+    background-color:#2544bd;color:white;
+}
+
+.title{
+ color: #000;
+ margin-top: -10px;
+}
+
+.title span {
+    padding: 0 0.3em;
+    z-index: 1;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  /* .title:before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    z-index: 0 !important;
+    top: 39% !important;
+    width: 77% !important;
+    border-bottom: 2px solid
+    #fff;
+  } */
+
+@media (max-width:767px){
+
+
+    html,body{
+        background-color: #fcd100;
+        background-image: linear-gradient(315deg, #fcd100 0%, #fcd100 74%);
+    }
+    .social_icon {
+        top: -65px;
+    }
+
+    .card{
+        width: 100%;
+    }
+}
