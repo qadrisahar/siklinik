@@ -1,10 +1,10 @@
 <?php
 if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class A_stok_keluar extends CI_Controller {
+class A_stok_keluar_alkes extends CI_Controller {
 	function __construct() {
         parent::__construct();
-				$this->load->model('m_stok_keluar');
+				$this->load->model('m_stok_keluar_alkes');
     }
 
 		public function index()
@@ -12,9 +12,9 @@ class A_stok_keluar extends CI_Controller {
 				$cek=$this->session->userdata('status');
 				$level=$this->session->userdata('level');
 				if($cek=='lginx' && $level=='mn'){
-					$d['title']='Stok Keluar Obat'; 
+					$d['title']='Stok Keluar Alkes'; 
                     $d['icon']='pe-7s-download';   
-                    $d['content']='stok_keluar/view';
+                    $d['content']='stok_keluar_alkes/view';
                     $this->load->view('home',$d);
 				}else {
 				    redirect('login/logout');
@@ -27,9 +27,9 @@ class A_stok_keluar extends CI_Controller {
 				$cek=$this->session->userdata('status');
 				$level=$this->session->userdata('level');
 				if($cek=='lginx' && $level=='mn'){
-					$d['title']='Tambah Stok Keluar Obat'; 
+					$d['title']='Tambah Stok Keluar Alkes'; 
                     $d['icon']='pe-7s-plus';   
-                    $d['content']='stok_keluar/add';
+                    $d['content']='stok_keluar_alkes/add';
                     $this->load->view('home',$d);
 				}else {
 				    redirect('login/logout');
@@ -37,10 +37,10 @@ class A_stok_keluar extends CI_Controller {
 
 			}
 
-			function get_stok_keluar()
+			function get_stok_keluar_alkes()
 	    {
 
-	        $list = $this->m_stok_keluar->get_datatables();
+	        $list = $this->m_stok_keluar_alkes->get_datatables();
 	        $data = array();
 	        $no = $this->input->post('start');
 	        foreach ($list as $dt) {
@@ -60,8 +60,8 @@ class A_stok_keluar extends CI_Controller {
                 $no++;
 	            $row = array();
 	            $row[] = '<center>'.$no.'</center>';
-                $row[] = $dt->kode_obat;
-				$row[] = $dt->nama_obat;
+                $row[] = $dt->kode_alkes;
+				$row[] = $dt->nama_alkes;
 				$row[] = $dt->kategori;
 				$row[] = datetime($dt->w_insert);
                 $row[] = $dt->keterangan;
@@ -73,8 +73,8 @@ class A_stok_keluar extends CI_Controller {
 
 	        $output = array(
 	            "draw" => $this->input->post('draw'),
-	            "recordsTotal" => $this->m_stok_keluar->count_all(),
-	            "recordsFiltered" => $this->m_stok_keluar->count_filtered(),
+	            "recordsTotal" => $this->m_stok_keluar_alkes->count_all(),
+	            "recordsFiltered" => $this->m_stok_keluar_alkes->count_filtered(),
 	            "data" => $data,
 	        );
 	        //output dalam format JSON
@@ -91,7 +91,7 @@ class A_stok_keluar extends CI_Controller {
 						    error_reporting(0);
 								date_default_timezone_set('Asia/Makassar');
 								$key=$this->input->post('id');
-								$kode_obat=$this->input->post('kode_obat');
+								$kode_alkes=$this->input->post('kode_alkes');
 								$type_stok=$this->input->post('type_stok');
 								$jumlah= $this->input->post('jumlah');
 								$keterangan= $this->input->post('keterangan');
@@ -102,13 +102,13 @@ class A_stok_keluar extends CI_Controller {
 									$stok_keluar=$jumlah;
 								}
 								$id['id_stok_keluar'] = $key;
-								$dt['kode_obat'] = $kode_obat;
+								$dt['kode_alkes'] = $kode_alkes;
 								$dt['jumlah'] =$stok_keluar;
 								$dt['keterangan'] =$keterangan;
 								$dt['updated_by'] = $this->session->userdata('id_user');
 								$dt['id_stok_keluar'] = 'ST-'.uniqid();
 								$dt['w_insert'] =date('Y-m-d H:i:s');
-								$this->m_stok_keluar->insert($dt);
+								$this->m_stok_keluar_alkes->insert($dt);
 								echo "Data Sukses DiSimpan";
 					}else {
 						  redirect('login/logout');
@@ -124,7 +124,7 @@ class A_stok_keluar extends CI_Controller {
 							$level=$this->session->userdata('level');
 							if($cek=='lginx' && $level=='mn'){
 										$id['id_stok_keluar'] = $this->input->post('id');
-									    $this->m_stok_keluar->delete($id);
+									    $this->m_stok_keluar_alkes->delete($id);
 										echo "Data Sukses Dihapus";
 							}else {
 								  redirect('login/logout');

@@ -29,6 +29,29 @@ class Search_data extends CI_Controller {
 
 		}
 
+		public function cari_alkes()
+		{
+			$query=$this->input->post('query');
+			$output = '';
+			$q = $this->db->query("SELECT o.kode_alkes,o.nama_alkes,o.harga_beli,o.harga_jual,o.id_unit,o.id_satuan,o.isi,kt.kategori FROM alkes o LEFT JOIN kategori_alkes kt ON kt.id_kategori=o.id_kategori WHERE (kode_alkes LIKE '%".$query."%') OR nama_alkes LIKE '%".$query."%'");
+			$row=$q->num_rows();
+			$output = '<ul class="list-unstyled" tabindex="-1" role="listbox" aria-labelledby="no">';
+		if($row > 0)
+		{
+						$i=1;
+						foreach ($q->result() as $dt) {
+				$output .= '<li id="no_'.$i++.'" role="option" data-hj="'.toRp($dt->harga_jual).'" data-hb="'.toRp($dt->harga_beli).'" data-unit="'.$dt->id_unit.'" data-isi="'.$dt->isi.' '.$dt->id_satuan.'"><b>'.$dt->kode_alkes.'</b>/'.$dt->nama_alkes.'/'.$dt->kategori.'</li>';
+						}
+		}
+		else
+		{
+			$output .= '<li>Alkes tidak ditemukan</li>';
+		}
+		$output .= '</ul>';
+		echo $output;
+
+		}
+
 		function data_obat_tindakan()
 	    {
 			$no_registrasi=$this->input->post('no_registrasi');

@@ -1,12 +1,12 @@
 <?php
 
-class M_stok_keluar extends CI_Model {
+class M_stok_masuk_alkes extends CI_Model {
 
-    var $table = 'stok_keluar sm'; //nama tabel dari database
-    var $select = array('sm.id_stok_keluar', 'sm.kode_obat', 'o.nama_obat as nama_obat', 'kt.kategori as kategori', 'sm.jumlah','sm.w_insert','o.isi','o.id_satuan','o.id_unit','sm.keterangan');
-    var $column_order = array(null,'sm.kode_obat', 'o.nama_obat', 'kt.kategori','sm.w_insert');
-    var $column_search = array('sm.kode_obat','o.nama_obat','kt.kategori','sm.keterangan');
-    var $order = array('sm.kode_obat' => 'asc');
+    var $table = 'stok_masuk_alkes sm'; //nama tabel dari database
+    var $select = array('sm.id_stok_masuk', 'sm.kode_alkes', 'o.nama_alkes as nama_alkes', 'kt.kategori as kategori', 'sm.order_date', 'sm.expired_date', 'sm.jumlah','sm.harga_beli','sm.harga_jual','o.isi','o.id_satuan','o.id_unit');
+    var $column_order = array(null,'sm.kode_alkes', 'o.nama_alkes', 'kt.kategori', 'sm.order_date', 'sm.expired_date');
+    var $column_search = array('sm.kode_alkes','o.nama_alkes','kt.kategori');
+    var $order = array('sm.kode_alkes' => 'asc');
 
     public function __construct()
     {
@@ -40,8 +40,8 @@ class M_stok_keluar extends CI_Model {
     {
       $this->db->select($this->select);
       $this->db->from($this->table)
-      ->join('obat o','o.kode_obat=sm.kode_obat')
-      ->join('kategori_obat kt','kt.id_kategori=o.id_kategori')->order_by('sm.w_insert','desc');
+      ->join('alkes o','o.kode_alkes=sm.kode_alkes')
+      ->join('kategori_alkes kt','kt.id_kategori=o.id_kategori')->order_by('sm.w_insert','desc');
         $i = 0;
 
         foreach ($this->column_search as $item) // looping awal
@@ -76,17 +76,17 @@ class M_stok_keluar extends CI_Model {
     }
 
     public function insert($dt){
-        $q = $this->db->insert('stok_keluar',$dt);
+        $q = $this->db->insert('stok_masuk_alkes',$dt);
         return $q;
     }
 
     public function update($dt,$id){
-        $q = $this->db->update('stok_keluar',$dt,$id);
+        $q = $this->db->update('stok_masuk_alkes',$dt,$id);
         return $q;
     }
 
     public function delete($id){
-        $q = $this->db->delete('stok_keluar',$id);
+        $q = $this->db->delete('stok_masuk_alkes',$id);
         return $q;
     }
 

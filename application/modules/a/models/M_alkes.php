@@ -1,12 +1,12 @@
 <?php
 
-class M_stok_keluar extends CI_Model {
+class M_alkes extends CI_Model {
 
-    var $table = 'stok_keluar sm'; //nama tabel dari database
-    var $select = array('sm.id_stok_keluar', 'sm.kode_obat', 'o.nama_obat as nama_obat', 'kt.kategori as kategori', 'sm.jumlah','sm.w_insert','o.isi','o.id_satuan','o.id_unit','sm.keterangan');
-    var $column_order = array(null,'sm.kode_obat', 'o.nama_obat', 'kt.kategori','sm.w_insert');
-    var $column_search = array('sm.kode_obat','o.nama_obat','kt.kategori','sm.keterangan');
-    var $order = array('sm.kode_obat' => 'asc');
+    var $table = 'alkes o'; //nama tabel dari database
+    var $select = array('o.id_alkes', 'o.nama_alkes', 'o.kode_alkes', 'kt.kategori as kategori', 'st.satuan as satuan', 'u.unit as unit','o.isi','o.harga_beli','o.harga_jual');
+    var $column_order = array(null,'o.nama_alkes', 'o.kode_alkes', 'kt.kategori as kategori', 'st.satuan as satuan');
+    var $column_search = array('o.nama_alkes', 'o.kode_alkes', 'kt.kategori');
+    var $order = array('o.nama_alkes' => 'asc');
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class M_stok_keluar extends CI_Model {
     {
         $this->_get_datatables_query();
         if($_POST['length'] != -1)
-        $this->db->limit($_POST['length'], $_POST['start']);
+        $this->db->limit($_POST['length'], $_POST['start']); 
         $query = $this->db->get();
         return $query->result();
     }
@@ -38,16 +38,18 @@ class M_stok_keluar extends CI_Model {
 
     private function _get_datatables_query()
     {
-      $this->db->select($this->select);
-      $this->db->from($this->table)
-      ->join('obat o','o.kode_obat=sm.kode_obat')
-      ->join('kategori_obat kt','kt.id_kategori=o.id_kategori')->order_by('sm.w_insert','desc');
+        $this->db->select($this->select);
+        $this->db->from($this->table)
+        ->join('kategori_alkes kt','kt.id_kategori=o.id_kategori')
+        ->join('satuan_alkes st','st.id_satuan=o.id_satuan')
+        ->join('unit_alkes u','u.id_unit=o.id_unit');
         $i = 0;
 
         foreach ($this->column_search as $item) // looping awal
         {
             if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
             {
+
                 if($i===0) // looping awal
                 {
                     $this->db->group_start();
@@ -76,17 +78,17 @@ class M_stok_keluar extends CI_Model {
     }
 
     public function insert($dt){
-        $q = $this->db->insert('stok_keluar',$dt);
+        $q = $this->db->insert('alkes',$dt);
         return $q;
     }
 
     public function update($dt,$id){
-        $q = $this->db->update('stok_keluar',$dt,$id);
+        $q = $this->db->update('alkes',$dt,$id);
         return $q;
     }
 
     public function delete($id){
-        $q = $this->db->delete('stok_keluar',$id);
+        $q = $this->db->delete('alkes',$id);
         return $q;
     }
 

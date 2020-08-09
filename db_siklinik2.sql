@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.3
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Aug 09, 2020 at 07:12 AM
--- Server version: 5.7.26
--- PHP Version: 5.6.40
+-- Host: localhost
+-- Generation Time: Aug 09, 2020 at 03:14 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,6 +21,51 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_siklinik`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alkes`
+--
+
+CREATE TABLE `alkes` (
+  `id_alkes` varchar(30) NOT NULL,
+  `id_kategori` varchar(30) NOT NULL,
+  `id_satuan` varchar(30) NOT NULL,
+  `isi` smallint(6) NOT NULL,
+  `id_unit` varchar(30) NOT NULL,
+  `kode_alkes` varchar(20) NOT NULL,
+  `nama_alkes` varchar(50) NOT NULL,
+  `harga_beli` int(11) NOT NULL,
+  `harga_jual` int(11) NOT NULL,
+  `w_insert` datetime NOT NULL,
+  `w_update` datetime NOT NULL,
+  `updated_by` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `alkes`
+--
+
+INSERT INTO `alkes` (`id_alkes`, `id_kategori`, `id_satuan`, `isi`, `id_unit`, `kode_alkes`, `nama_alkes`, `harga_beli`, `harga_jual`, `w_insert`, `w_update`, `updated_by`) VALUES
+('OB-5f2ff08f5bd5d', 'KT-5f2ff0276cae1', 'Buah', 5, 'unit', '1', 'Jarum', 10000, 12000, '2020-08-09 20:48:15', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('OB-5f2ff46d4eedb', 'KT-5f2ff0276cae1', 'Buah', 8, 'unit', '1234', '8', 10000, 13000, '2020-08-09 21:04:45', '2020-08-09 21:04:58', 'UR-5f0ad99e7c4fd');
+
+--
+-- Triggers `alkes`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_data_stok_alkes` AFTER INSERT ON `alkes` FOR EACH ROW BEGIN
+  INSERT IGNORE INTO stok_alkes(kode_alkes,stok) VALUES(NEW.kode_alkes,'0');
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_data_stok_alkes` AFTER UPDATE ON `alkes` FOR EACH ROW BEGIN
+  INSERT IGNORE INTO stok_alkes(kode_alkes,stok) VALUES(NEW.kode_alkes,'0');
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -38,6 +85,27 @@ CREATE TABLE `identitas` (
 
 INSERT INTO `identitas` (`id`, `nama`, `id_provinsi`) VALUES
 ('identitas', 'Mysmartteam', '71');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori_alkes`
+--
+
+CREATE TABLE `kategori_alkes` (
+  `id_kategori` varchar(30) NOT NULL,
+  `kategori` varchar(100) NOT NULL,
+  `w_insert` datetime NOT NULL,
+  `w_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori_alkes`
+--
+
+INSERT INTO `kategori_alkes` (`id_kategori`, `kategori`, `w_insert`, `w_update`, `updated_by`) VALUES
+('KT-5f2ff0276cae1', 'Alat', '2020-08-09 20:46:31', '2020-08-09 12:46:31', 'UR-5f0ad99e7c4fd');
 
 -- --------------------------------------------------------
 
@@ -323,7 +391,7 @@ CREATE TABLE `obat` (
 --
 
 INSERT INTO `obat` (`id_obat`, `id_kategori`, `id_satuan`, `isi`, `id_unit`, `kode_obat`, `nama_obat`, `harga_beli`, `harga_jual`, `w_insert`, `w_update`, `updated_by`) VALUES
-('OB-5f1d0cb202ec7', 'KT-5f0c70119781d', 'PCS', 12, 'Box', 'BRX001', 'Bodrex', 0, 0, '2020-07-26 12:55:14', '2020-08-06 07:57:13', 'UR-5f0ad99e7c4fd'),
+('OB-5f1d0cb202ec7', 'KT-5f0c70119781d', 'PCS', 12, 'Box', 'BRX001', 'Bodrex', 12000, 13000, '2020-07-26 12:55:14', '2020-08-06 07:57:13', 'UR-5f0ad99e7c4fd'),
 ('OB-5f1d0ccf61ae1', 'KT-5f10ea8a21681', 'Tablet', 1, 'Box', 'PRC001', 'Paracetamol', 0, 10000, '2020-07-26 12:55:43', '2020-08-07 00:14:02', 'UR-5f0ad99e7c4fd'),
 ('OB-5f297deeda5c4', 'KT-5f0c7085e9695', 'PCS', 1, 'Botol', 'sdfs', 'BRX001', 0, 0, '2020-08-04 23:25:34', '2020-08-06 07:57:18', 'UR-5f0ad99e7c4fd'),
 ('OB-5f2b47777d2ec', 'KT-5f0c7085e9695', 'Tablet', 1, 'Botol', 'hh', 'h', 0, 0, '2020-08-06 07:57:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
@@ -498,6 +566,7 @@ CREATE TABLE `registrasi` (
   `no_antrian` varchar(3) DEFAULT NULL,
   `cancel` enum('n','y') NOT NULL,
   `eksekusi` enum('n','y') NOT NULL,
+  `bayar` enum('n','y') NOT NULL,
   `w_insert` datetime NOT NULL,
   `w_update` datetime NOT NULL,
   `updated_by` varchar(30) NOT NULL
@@ -507,38 +576,38 @@ CREATE TABLE `registrasi` (
 -- Dumping data for table `registrasi`
 --
 
-INSERT INTO `registrasi` (`no_registrasi`, `id_layanan`, `id_pasien`, `no_antrian`, `cancel`, `eksekusi`, `w_insert`, `w_update`, `updated_by`) VALUES
-('REG-20200719-001', 'imunisasi', 'P-20200718-004', NULL, 'n', 'y', '2020-07-19 21:42:34', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200719-002', 'imunisasi', 'P-20200718-001', NULL, 'n', 'n', '2020-07-19 22:39:02', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200721-001', 'imunisasi', 'P-20200718-004', '001', 'n', 'n', '2020-07-21 22:08:40', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200721-002', 'imunisasi', 'P-20200718-001', '002', 'n', 'n', '2020-07-21 22:08:53', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200721-003', 'imunisasi', 'P-20200721-002', '003', 'n', 'n', '2020-07-21 22:38:44', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-001', 'imunisasi', 'P-20200721-001', '001', 'n', 'n', '2020-07-22 21:42:27', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-002', 'imunisasi', 'P-20200721-001', '002', 'n', 'n', '2020-07-22 21:43:00', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-003', 'imunisasi', 'P-20200722-002', '003', 'n', 'n', '2020-07-22 21:56:30', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-004', 'imunisasi', 'P-20200722-002', '004', 'n', 'n', '2020-07-22 21:58:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-005', 'imunisasi', 'P-20200721-002', '005', 'n', 'n', '2020-07-22 22:09:18', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-006', 'imunisasi', 'P-20200722-001', '006', 'n', 'n', '2020-07-22 22:09:55', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-007', 'imunisasi', 'P-20200718-001', '007', 'n', 'n', '2020-07-22 22:10:45', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200722-008', 'imunisasi', 'P-20200718-004', '008', 'y', 'n', '2020-07-22 22:12:34', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200723-001', 'imunisasi', 'P-20200722-002', '001', 'y', 'n', '2020-07-23 00:09:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200723-002', 'imunisasi', 'P-20200722-001', '002', 'n', 'n', '2020-07-23 05:51:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200723-003', 'imunisasi', 'P-20200718-002', '003', 'y', 'n', '2020-07-23 05:52:06', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200723-004', 'imunisasi', 'P-20200718-003', '004', 'y', 'n', '2020-07-23 15:24:01', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200723-005', 'imunisasi', 'P-20200721-001', '005', 'n', 'n', '2020-07-23 22:19:02', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-001', 'imunisasi', 'P-20200722-001', '001', 'n', 'n', '2020-07-24 05:49:08', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-002', 'imunisasi', 'P-20200722-001', '002', 'n', 'n', '2020-07-24 05:49:21', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-003', 'imunisasi', 'P-20200722-002', '003', 'n', 'n', '2020-07-24 05:49:32', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-004', 'imunisasi', 'P-20200718-004', '004', 'n', 'n', '2020-07-24 05:49:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-005', 'imunisasi', 'P-20200721-002', '005', 'n', 'n', '2020-07-24 07:25:29', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-006', 'imunisasi', 'P-20200721-001', '006', 'n', 'n', '2020-07-24 07:40:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-007', 'imunisasi', 'P-20200718-001', '007', 'n', 'n', '2020-07-24 07:41:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-008', 'imunisasi', 'P-20200721-002', '008', 'n', 'n', '2020-07-24 07:51:54', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-009', 'imunisasi', 'P-20200722-001', '009', 'n', 'n', '2020-07-24 07:52:31', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-010', 'imunisasi', 'P-20200718-002', '010', 'n', 'n', '2020-07-24 07:54:17', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-011', 'imunisasi', 'P-20200721-002', '011', 'n', 'n', '2020-07-24 07:57:15', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-012', 'imunisasi', 'P-20200722-002', '012', 'n', 'n', '2020-07-24 07:59:11', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
-('REG-20200724-013', 'imunisasi', 'P-20200718-001', '013', 'n', 'n', '2020-07-24 08:08:11', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd');
+INSERT INTO `registrasi` (`no_registrasi`, `id_layanan`, `id_pasien`, `no_antrian`, `cancel`, `eksekusi`, `bayar`, `w_insert`, `w_update`, `updated_by`) VALUES
+('REG-20200719-001', 'imunisasi', 'P-20200718-004', NULL, 'n', 'y', 'n', '2020-07-19 21:42:34', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200719-002', 'imunisasi', 'P-20200718-001', NULL, 'n', 'n', 'n', '2020-07-19 22:39:02', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200721-001', 'imunisasi', 'P-20200718-004', '001', 'n', 'n', 'n', '2020-07-21 22:08:40', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200721-002', 'imunisasi', 'P-20200718-001', '002', 'n', 'n', 'n', '2020-07-21 22:08:53', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200721-003', 'imunisasi', 'P-20200721-002', '003', 'n', 'n', 'n', '2020-07-21 22:38:44', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-001', 'imunisasi', 'P-20200721-001', '001', 'n', 'n', 'n', '2020-07-22 21:42:27', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-002', 'imunisasi', 'P-20200721-001', '002', 'n', 'n', 'n', '2020-07-22 21:43:00', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-003', 'imunisasi', 'P-20200722-002', '003', 'n', 'n', 'n', '2020-07-22 21:56:30', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-004', 'imunisasi', 'P-20200722-002', '004', 'n', 'n', 'n', '2020-07-22 21:58:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-005', 'imunisasi', 'P-20200721-002', '005', 'n', 'n', 'n', '2020-07-22 22:09:18', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-006', 'imunisasi', 'P-20200722-001', '006', 'n', 'n', 'n', '2020-07-22 22:09:55', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-007', 'imunisasi', 'P-20200718-001', '007', 'n', 'n', 'n', '2020-07-22 22:10:45', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200722-008', 'imunisasi', 'P-20200718-004', '008', 'y', 'n', 'n', '2020-07-22 22:12:34', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200723-001', 'imunisasi', 'P-20200722-002', '001', 'y', 'n', 'n', '2020-07-23 00:09:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200723-002', 'imunisasi', 'P-20200722-001', '002', 'n', 'n', 'n', '2020-07-23 05:51:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200723-003', 'imunisasi', 'P-20200718-002', '003', 'y', 'n', 'n', '2020-07-23 05:52:06', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200723-004', 'imunisasi', 'P-20200718-003', '004', 'y', 'n', 'n', '2020-07-23 15:24:01', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200723-005', 'imunisasi', 'P-20200721-001', '005', 'n', 'n', 'n', '2020-07-23 22:19:02', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-001', 'imunisasi', 'P-20200722-001', '001', 'n', 'n', 'n', '2020-07-24 05:49:08', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-002', 'imunisasi', 'P-20200722-001', '002', 'n', 'n', 'n', '2020-07-24 05:49:21', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-003', 'imunisasi', 'P-20200722-002', '003', 'n', 'n', 'n', '2020-07-24 05:49:32', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-004', 'imunisasi', 'P-20200718-004', '004', 'n', 'n', 'n', '2020-07-24 05:49:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-005', 'imunisasi', 'P-20200721-002', '005', 'n', 'n', 'n', '2020-07-24 07:25:29', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-006', 'imunisasi', 'P-20200721-001', '006', 'n', 'n', 'n', '2020-07-24 07:40:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-007', 'imunisasi', 'P-20200718-001', '007', 'n', 'n', 'n', '2020-07-24 07:41:43', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-008', 'imunisasi', 'P-20200721-002', '008', 'n', 'n', 'n', '2020-07-24 07:51:54', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-009', 'imunisasi', 'P-20200722-001', '009', 'n', 'n', 'n', '2020-07-24 07:52:31', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-010', 'imunisasi', 'P-20200718-002', '010', 'n', 'n', 'n', '2020-07-24 07:54:17', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-011', 'imunisasi', 'P-20200721-002', '011', 'n', 'n', 'n', '2020-07-24 07:57:15', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-012', 'imunisasi', 'P-20200722-002', '012', 'n', 'n', 'n', '2020-07-24 07:59:11', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
+('REG-20200724-013', 'imunisasi', 'P-20200718-001', '013', 'n', 'n', 'n', '2020-07-24 08:08:11', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd');
 
 -- --------------------------------------------------------
 
@@ -561,6 +630,27 @@ CREATE TABLE `satuan` (
 INSERT INTO `satuan` (`id_satuan`, `satuan`, `w_insert`, `w_update`, `updated_by`) VALUES
 ('PCS', 'PCS', '2020-07-14 15:34:49', '2020-07-14 15:34:55', 'UR-5f0ad99e7c4fd'),
 ('Tablet', 'Tablet', '2020-07-14 15:35:04', '2020-07-25 13:57:00', 'UR-5f0ad99e7c4fd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `satuan_alkes`
+--
+
+CREATE TABLE `satuan_alkes` (
+  `id_satuan` varchar(30) NOT NULL,
+  `satuan` varchar(50) NOT NULL,
+  `w_insert` datetime NOT NULL,
+  `w_update` datetime NOT NULL,
+  `updated_by` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `satuan_alkes`
+--
+
+INSERT INTO `satuan_alkes` (`id_satuan`, `satuan`, `w_insert`, `w_update`, `updated_by`) VALUES
+('Buah', 'Buah', '2020-08-09 20:47:40', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd');
 
 -- --------------------------------------------------------
 
@@ -605,10 +695,29 @@ CREATE TABLE `stok` (
 --
 
 INSERT INTO `stok` (`kode_obat`, `stok`) VALUES
-('BRX001', 125),
+('BRX001', 120),
 ('BRX0012', 0),
-('PRC001', 33),
+('PRC001', 163),
 ('t', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stok_alkes`
+--
+
+CREATE TABLE `stok_alkes` (
+  `kode_alkes` varchar(20) NOT NULL,
+  `stok` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stok_alkes`
+--
+
+INSERT INTO `stok_alkes` (`kode_alkes`, `stok`) VALUES
+('1', 5),
+('1234', 10);
 
 -- --------------------------------------------------------
 
@@ -648,7 +757,9 @@ CREATE TABLE `stok_keluar` (
 --
 
 INSERT INTO `stok_keluar` (`id_stok_keluar`, `kode_obat`, `jumlah`, `keterangan`, `w_insert`, `updated_by`) VALUES
-('ST-5f2e41c4005eb', 't', 10, 'karenaaaa', '2020-08-08 14:10:12', 'UR-5f0ad99e7c4fd');
+('ST-5f2e41c4005eb', 't', 10, 'karenaaaa', '2020-08-08 14:10:12', 'UR-5f0ad99e7c4fd'),
+('ST-5f2ff512d8fbc', 'BRX001', 2, 'iiiii', '2020-08-09 21:07:30', 'UR-5f0ad99e7c4fd'),
+('ST-5f2ff6909d032', 'BRX001', 5, 'ndk tau', '2020-08-09 21:13:52', 'UR-5f0ad99e7c4fd');
 
 --
 -- Triggers `stok_keluar`
@@ -662,6 +773,45 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `stok_keluar_bd` BEFORE DELETE ON `stok_keluar` FOR EACH ROW BEGIN
    UPDATE stok SET stok=stok+OLD.jumlah WHERE kode_obat=OLD.kode_obat;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stok_keluar_alkes`
+--
+
+CREATE TABLE `stok_keluar_alkes` (
+  `id_stok_keluar` varchar(30) NOT NULL,
+  `kode_alkes` varchar(30) NOT NULL,
+  `jumlah` int(13) NOT NULL,
+  `keterangan` varchar(200) NOT NULL,
+  `w_insert` datetime NOT NULL,
+  `updated_by` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stok_keluar_alkes`
+--
+
+INSERT INTO `stok_keluar_alkes` (`id_stok_keluar`, `kode_alkes`, `jumlah`, `keterangan`, `w_insert`, `updated_by`) VALUES
+('ST-5f2ff40c3ca9a', '1', 5, 'tidak tau', '2020-08-09 21:03:08', 'UR-5f0ad99e7c4fd'),
+('ST-5f2ff4c6ea1a3', '1234', 2, 'rusakii', '2020-08-09 21:06:14', 'UR-5f0ad99e7c4fd');
+
+--
+-- Triggers `stok_keluar_alkes`
+--
+DELIMITER $$
+CREATE TRIGGER `stok_keluar_aa` AFTER INSERT ON `stok_keluar_alkes` FOR EACH ROW BEGIN
+  UPDATE stok_alkes SET stok=stok-NEW.jumlah WHERE kode_alkes=NEW.kode_alkes;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stok_keluar_bb` BEFORE DELETE ON `stok_keluar_alkes` FOR EACH ROW BEGIN
+   UPDATE stok_alkes SET stok=stok+OLD.jumlah WHERE kode_alkes=OLD.kode_alkes;
 END
 $$
 DELIMITER ;
@@ -695,7 +845,10 @@ INSERT INTO `stok_masuk` (`id_stok_masuk`, `kode_obat`, `harga_beli`, `harga_jua
 ('ST-5f2c22e586fec', 'PRC001', 20, 30, '2020-08-05 00:00:00', '2020-08-06 00:00:00', 12, '2020-08-06 23:33:57', 'UR-5f0ad99e7c4fd'),
 ('ST-5f2c285474198', 't', 1, 200, '2020-08-06 00:00:00', '2020-08-06 00:00:00', 20, '2020-08-06 23:57:08', 'UR-5f0ad99e7c4fd'),
 ('ST-5f2c28b65b9f2', 't', 1000, 200000, '2020-08-06 00:00:00', '2020-08-06 00:00:00', 20, '2020-08-06 23:58:46', 'UR-5f0ad99e7c4fd'),
-('ST-5f2c2acf04006', 't', 2000, 300000, '2020-08-07 00:00:00', '2020-08-07 00:00:00', 30, '2020-08-07 00:07:43', 'UR-5f0ad99e7c4fd');
+('ST-5f2c2acf04006', 't', 2000, 300000, '2020-08-07 00:00:00', '2020-08-07 00:00:00', 30, '2020-08-07 00:07:43', 'UR-5f0ad99e7c4fd'),
+('ST-5f2fd968e0881', 'PRC001', 23, 10000, '2020-07-30 00:00:00', '2020-08-07 00:00:00', 120, '2020-08-09 19:09:28', 'UR-5f0ad99e7c4fd'),
+('ST-5f2fe71e43afe', 'PRC001', 0, 10000, '2020-08-19 00:00:00', '2020-08-12 00:00:00', 10, '2020-08-09 20:07:58', 'UR-5f0ad99e7c4fd'),
+('ST-5f2ff669d1cb1', 'BRX001', 12000, 13000, '2020-07-31 00:00:00', '2020-07-30 00:00:00', 2, '2020-08-09 21:13:13', 'UR-5f0ad99e7c4fd');
 
 --
 -- Triggers `stok_masuk`
@@ -709,6 +862,48 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `stok_masuk_bd` BEFORE DELETE ON `stok_masuk` FOR EACH ROW BEGIN
    UPDATE stok SET stok=stok-OLD.jumlah WHERE kode_obat=OLD.kode_obat;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stok_masuk_alkes`
+--
+
+CREATE TABLE `stok_masuk_alkes` (
+  `id_stok_masuk` varchar(30) NOT NULL,
+  `kode_alkes` varchar(30) NOT NULL,
+  `harga_beli` int(11) NOT NULL,
+  `harga_jual` int(11) NOT NULL,
+  `order_date` datetime NOT NULL,
+  `expired_date` datetime NOT NULL,
+  `jumlah` int(13) NOT NULL,
+  `w_insert` datetime NOT NULL,
+  `updated_by` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stok_masuk_alkes`
+--
+
+INSERT INTO `stok_masuk_alkes` (`id_stok_masuk`, `kode_alkes`, `harga_beli`, `harga_jual`, `order_date`, `expired_date`, `jumlah`, `w_insert`, `updated_by`) VALUES
+('ST-5f2ff0ad12e05', '1', 10000, 12000, '2020-08-06 00:00:00', '2020-08-20 00:00:00', 10, '2020-08-09 20:48:45', 'UR-5f0ad99e7c4fd'),
+('ST-5f2ff4a2214e1', '1234', 10000, 13000, '2020-08-09 00:00:00', '2020-08-09 00:00:00', 12, '2020-08-09 21:05:38', 'UR-5f0ad99e7c4fd');
+
+--
+-- Triggers `stok_masuk_alkes`
+--
+DELIMITER $$
+CREATE TRIGGER `stok_masuk_aa` AFTER INSERT ON `stok_masuk_alkes` FOR EACH ROW BEGIN
+  UPDATE stok_alkes SET stok=stok+NEW.jumlah WHERE kode_alkes=NEW.kode_alkes;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stok_masuk_bb` BEFORE DELETE ON `stok_masuk_alkes` FOR EACH ROW BEGIN
+   UPDATE stok_alkes SET stok=stok-OLD.jumlah WHERE kode_alkes=OLD.kode_alkes;
 END
 $$
 DELIMITER ;
@@ -734,6 +929,27 @@ CREATE TABLE `unit` (
 INSERT INTO `unit` (`id_unit`, `unit`, `w_insert`, `w_update`, `updated_by`) VALUES
 ('Botol', 'Botol', '2020-07-26 12:52:26', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd'),
 ('Box', 'Box', '2020-07-26 12:52:21', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unit_alkes`
+--
+
+CREATE TABLE `unit_alkes` (
+  `id_unit` varchar(30) NOT NULL,
+  `unit` varchar(30) NOT NULL,
+  `w_insert` datetime NOT NULL,
+  `w_update` datetime NOT NULL,
+  `updated_by` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `unit_alkes`
+--
+
+INSERT INTO `unit_alkes` (`id_unit`, `unit`, `w_insert`, `w_update`, `updated_by`) VALUES
+('unit', 'unit', '2020-08-09 20:47:49', '0000-00-00 00:00:00', 'UR-5f0ad99e7c4fd');
 
 -- --------------------------------------------------------
 
@@ -777,10 +993,23 @@ INSERT INTO `users` (`id_user`, `level`, `cover`, `id_provinsi`, `id_kabupaten`,
 --
 
 --
+-- Indexes for table `alkes`
+--
+ALTER TABLE `alkes`
+  ADD PRIMARY KEY (`id_alkes`),
+  ADD UNIQUE KEY `id_obat` (`id_alkes`);
+
+--
 -- Indexes for table `identitas`
 --
 ALTER TABLE `identitas`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kategori_alkes`
+--
+ALTER TABLE `kategori_alkes`
+  ADD UNIQUE KEY `id_kategori` (`id_kategori`);
 
 --
 -- Indexes for table `kategori_obat`
@@ -894,6 +1123,13 @@ ALTER TABLE `satuan`
   ADD KEY `id_satuan` (`id_satuan`);
 
 --
+-- Indexes for table `satuan_alkes`
+--
+ALTER TABLE `satuan_alkes`
+  ADD PRIMARY KEY (`id_satuan`),
+  ADD UNIQUE KEY `id_satuan` (`id_satuan`);
+
+--
 -- Indexes for table `setting`
 --
 ALTER TABLE `setting`
@@ -906,6 +1142,12 @@ ALTER TABLE `stok`
   ADD PRIMARY KEY (`kode_obat`);
 
 --
+-- Indexes for table `stok_alkes`
+--
+ALTER TABLE `stok_alkes`
+  ADD PRIMARY KEY (`kode_alkes`);
+
+--
 -- Indexes for table `stok_awal`
 --
 ALTER TABLE `stok_awal`
@@ -915,6 +1157,14 @@ ALTER TABLE `stok_awal`
 -- Indexes for table `stok_keluar`
 --
 ALTER TABLE `stok_keluar`
+  ADD PRIMARY KEY (`id_stok_keluar`),
+  ADD UNIQUE KEY `id_stok_masuk` (`id_stok_keluar`);
+
+--
+-- Indexes for table `stok_keluar_alkes`
+--
+ALTER TABLE `stok_keluar_alkes`
+  ADD PRIMARY KEY (`id_stok_keluar`),
   ADD UNIQUE KEY `id_stok_masuk` (`id_stok_keluar`);
 
 --
@@ -924,9 +1174,21 @@ ALTER TABLE `stok_masuk`
   ADD UNIQUE KEY `id_stok_masuk` (`id_stok_masuk`);
 
 --
+-- Indexes for table `stok_masuk_alkes`
+--
+ALTER TABLE `stok_masuk_alkes`
+  ADD UNIQUE KEY `id_stok_masuk` (`id_stok_masuk`);
+
+--
 -- Indexes for table `unit`
 --
 ALTER TABLE `unit`
+  ADD UNIQUE KEY `id_unit` (`id_unit`);
+
+--
+-- Indexes for table `unit_alkes`
+--
+ALTER TABLE `unit_alkes`
   ADD UNIQUE KEY `id_unit` (`id_unit`);
 
 --
@@ -945,7 +1207,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `layanan_log_exc`
 --
 ALTER TABLE `layanan_log_exc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

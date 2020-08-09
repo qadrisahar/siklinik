@@ -20,29 +20,29 @@
         <form name="form" id="form" enctype="multipart/form-data">
             <input type="hidden" id="id" name="id" value="" readonly>
             <div class="col-md-12 mb-12">
-                <label for="validationCustomUsername">Cari Obat</label>
+                <label for="validationCustomUsername">Cari alkes</label>
                 <div class="input-group" id="no">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroupPrepend"><i class="pe-7s-search"></i></span>
                     </div>
-                    <input type="text" class="form-control" name="cari_obat" id="cari_obat" placeholder="Cari Dengan Keyword Kode Obat atau Nama Obat" aria-describedby="inputGroupPrepend" data-parsley-errors-container="#cari_error" required>
+                    <input type="text" class="form-control" name="cari_alkes" id="cari_alkes" placeholder="Cari Dengan Keyword Kode alkes atau Nama alkes" aria-describedby="inputGroupPrepend" data-parsley-errors-container="#cari_error" required>
                 </div>
                 <div id="cari_error"></div>
-                <div id="list_obat"></div>
+                <div id="list_alkes"></div>
                 
             </div><br>
             <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                 <div class="col-sm-12">
-                    <label>Kode Obat </label>
-                        <input type="text" class="form-control" name="kode_obat" id="kode_obat" required readonly>
+                    <label>Kode alkes </label>
+                        <input type="text" class="form-control" name="kode_alkes" id="kode_alkes" required readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
-                    <label>Nama Obat<span class="red"></span></label>
-                        <input type="text" class="form-control" name="nama_obat" id="nama_obat" required readonly>
+                    <label>Nama alkes<span class="red"></span></label>
+                        <input type="text" class="form-control" name="nama_alkes" id="nama_alkes" required readonly>
                     </div>
                 </div>
                 <div class="form-group">
@@ -67,13 +67,31 @@
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <div class="col-sm-12">
-                    <label>Keterangan<span class="red"></span></label>
-                        <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" required>
+                    <label>Tanggal Order <span class="red"></span></label>
+                        <input type="date" class="form-control" name="order_date" id="order_date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                    <label>Tanggal Expired <span class="red"></span></label>
+                        <input type="date" class="form-control" name="expired_date" id="expired_date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                    <label>Harga Beli Per Satuan</label>
+                        <input type="text" class="form-control" name="harga_beli" id="harga_beli" onkeyup="javascript:this.value=autoseparator(this.value);" placeholder="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                    <label>Harga Jual Per Satuan</label>
+                        <input type="text" class="form-control" name="harga_jual" id="harga_jual" onkeyup="javascript:this.value=autoseparator(this.value);" placeholder="0" required>
                     </div>
                 </div>
                 <div class="form-group row pl-3 pr-3">
                     <div class="col-sm-6">
-                    <label>Jumlah Item Keluar</label>
+                    <label>Jumlah Item Masuk</label>
                         <input class="form-control" type="number" name="jumlah" id="jumlah" value="0" data-parsley-min="1" required>
                     </div>
                     <div class="col-sm-6">
@@ -115,11 +133,11 @@
             processData : false,
             cache: false,
             async:true,
-            url     : "<?php echo site_url('a_stok_keluar/simpan');?>",
+            url     : "<?php echo site_url('a_stok_masuk_alkes/simpan');?>",
             success : function(data) {
               process_done1(param,'<i class="fa fa-save"></i> Simpan');      
               Swal.fire('Sukses!',data,'success');
-              location.replace('<?=base_url().'a_stok_keluar'?>');
+              location.replace('<?=base_url().'a_stok_masuk_alkes'?>');
               $('#modal-tambah').modal('toggle');
             }
           });
