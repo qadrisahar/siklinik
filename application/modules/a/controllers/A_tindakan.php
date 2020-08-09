@@ -237,6 +237,22 @@ class A_tindakan extends CI_Controller {
 
 						}
 
+						public function proses_to_kasir()
+						{
+							error_reporting(0);
+							$cek=$this->session->userdata('status');
+							$level=$this->session->userdata('level');
+							if($cek=='lginx' && $level=='mn'){
+										$id['no_registrasi'] = $this->input->post('id');
+										$dt['eksekusi']='y';
+										$this->db->update('registrasi',$dt,$id);
+										echo "Data Telah Diteruskan Ke Kasir";
+							}else {
+								  redirect('login/logout');
+							}
+
+						}
+
 	}
 
 	?>

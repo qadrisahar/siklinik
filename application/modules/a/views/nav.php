@@ -1,10 +1,17 @@
 <?php
 $level=$this->session->userdata('level');
-$tind_neks=$this->db->select('COUNT(no_registrasi) as total')->where('eksekusi','n')->get('registrasi')->row()->total;
+$tind_neks=$this->db->select('COUNT(no_registrasi) as total')->where("eksekusi='n' AND cancel='n'")->get('registrasi')->row()->total;
 if($tind_neks>0){
     $notif_tind_neks='<span class="badge badge-pill badge-danger">'.$tind_neks.'</span>'; 
 }else{
     $notif_tind_neks='';
+}
+
+$pembyr_neks=$this->db->select('COUNT(no_registrasi) as total')->where("eksekusi='y' AND bayar='n' AND cancel='n'")->get('registrasi')->row()->total;
+if($pembyr_neks>0){
+    $notif_pembyr_neks='<span class="badge badge-pill badge-danger">'.$pembyr_neks.'</span>'; 
+}else{
+    $notif_pembyr_neks='';
 }
 ?>
 <div class="app-sidebar sidebar-shadow sidebar-text-white">
@@ -112,7 +119,7 @@ if($tind_neks>0){
                 <li>
                     <a href="<?=base_url().'a_pembayaran_neks'?>" class="navigation-list">
                         <i class="metismenu-icon pe-7s-wallet icon-gradient bg-strong-bliss"></i>
-                        Belum Dieksekusi <?=$notif_tind_neks?>
+                        Belum Dieksekusi <?=$notif_pembyr_neks?>
                     </a>
                 </li>
                 <li>

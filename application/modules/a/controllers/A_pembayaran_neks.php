@@ -1,10 +1,10 @@
 <?php
 if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class A_tindakan_eks extends CI_Controller {
+class A_pembayaran_neks extends CI_Controller {
 	function __construct() {
         parent::__construct();
-				$this->load->model('m_tindakan_eks');
+				$this->load->model('m_pembayaran_neks');
     }
 
 		public function index()
@@ -12,9 +12,9 @@ class A_tindakan_eks extends CI_Controller {
 				$cek=$this->session->userdata('status');
 				$level=$this->session->userdata('level');
 				if($cek=='lginx' && $level=='mn'){
-					$d['title']='Data Tindakan Telah Dieksekusi'; 
+					$d['title']='Data Pembayaran Belum Dieksekusi'; 
                     $d['icon']='pe-7s-drawer';   
-                    $d['content']='tindakan_eks/view';  
+                    $d['content']='pembayaran_neks/view';  
                     $this->load->view('home',$d);
 				}else {
 				    redirect('login/logout');
@@ -22,10 +22,10 @@ class A_tindakan_eks extends CI_Controller {
 
 			}
 
-			function get_tindakan_eks()
+			function get_pembayaran_neks()
 	    {
 
-	        $list = $this->m_tindakan_eks->get_datatables();
+	        $list = $this->m_pembayaran_neks->get_datatables();
 	        $data = array();
 	        $no = $this->input->post('start');
 	        foreach ($list as $dt) {
@@ -41,7 +41,7 @@ class A_tindakan_eks extends CI_Controller {
 				$row[] = '<center>'.hitung_umur($dt->tgl_lahir).'</center>';
 				$row[] = $dt->layanan;				
 				$row[] =  '<center>
-					<a href="'.base_url().'a_detail_tindakan?id='.base64_encode($dt->no_registrasi).'" class="btn-action edit" data-id="'.$dt->no_registrasi.'"><i class="fa fa-eye" aria-hidden="true"></i> Detail </a>
+					<a href="'.base_url().'a_pembayaran?id='.base64_encode($dt->no_registrasi).'" class="btn-action edit" data-id="'.$dt->no_registrasi.'"><i class="fa fa-edit" aria-hidden="true"></i> Eksekusi </a>
 				</center>';
 
 	            $data[] = $row;
@@ -49,8 +49,8 @@ class A_tindakan_eks extends CI_Controller {
 
 	        $output = array(
 	            "draw" => $this->input->post('draw'),
-	            "recordsTotal" => $this->m_tindakan_eks->count_all(),
-	            "recordsFiltered" => $this->m_tindakan_eks->count_filtered(),
+	            "recordsTotal" => $this->m_pembayaran_neks->count_all(),
+	            "recordsFiltered" => $this->m_pembayaran_neks->count_filtered(),
 	            "data" => $data,
 	        );
 	        //output dalam format JSON
@@ -59,16 +59,16 @@ class A_tindakan_eks extends CI_Controller {
 
 
 
-			public function cari_tindakan_eks()
+			public function cari_pembayaran_neks()
 				{
 					$cek=$this->session->userdata('status');
 					$level=$this->session->userdata('level');
 					if($cek=='lginx' && $level=='mn'){
 								$id['no_registrasi'] = $this->input->post('id');
-								$q=$this->db->get_where('tindakan_eks',$id);
+								$q=$this->db->get_where('pembayaran_neks',$id);
 								foreach ($q->result() as $dt) {
                                     $d['id']=$dt->no_registrasi;
-                                    $d['tindakan_eks']=$dt->tindakan_eks;
+                                    $d['pembayaran_neks']=$dt->pembayaran_neks;
                                 }
 								echo json_encode($d);
 					}else {

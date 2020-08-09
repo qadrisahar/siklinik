@@ -77,19 +77,4 @@ class M_tindakan_neks extends CI_Model {
         }
     }
 
-    public function insert($dt){
-        $q = $this->db->insert('tindakan_neks',$dt);
-        return $q;
-    }
-
-    public function update($dt,$id){
-        $q = $this->db->update('tindakan_neks',$dt,$id);
-        return $q;
-    }
-
-    public function delete($id){
-        $q = $this->db->delete('tindakan_neks',$id);
-        return $q;
-    }
-
   }
