@@ -209,13 +209,11 @@ $route['a_tindakan/hapus'] = 'a/a_tindakan/hapus';
 $route['a_tindakan/proses_to_kasir'] = 'a/a_tindakan/proses_to_kasir';
 /*End  tindakan*/
 
-<<<<<<< HEAD
 /* pembayaran*/
 $route['a_pembayaran'] = 'a/a_pembayaran';
 /*End  pembayaran*/
 
-=======
-<<<<<<< HEAD
+
 /*Data kategori alkes*/
 $route['a_kategori_alkes'] = 'a/a_kategori_alkes';
 $route['a_kategori_alkes/get_kategori_alkes'] = 'a/a_kategori_alkes/get_kategori_alkes';
@@ -270,11 +268,17 @@ $route['a_stok_keluar_alkes/simpan'] = 'a/a_stok_keluar_alkes/simpan';
 $route['a_stok_keluar_alkes/cari_stok_keluar_alkes'] = 'a/a_stok_keluar_alkes/cari_stok_keluar_alkes';
 $route['a_stok_keluar_alkes/hapus'] = 'a/a_stok_keluar_alkes/hapus';
 /*End Data Stok Keluar Alkes*/
-=======
->>>>>>> cc06515e8e7b520ba3b5534f1c9395ea84fd499d
+
 /*Pembayaran Belum Dieksekusi*/
 $route['a_pembayaran_neks'] = 'a/a_pembayaran_neks';
 $route['a_pembayaran_neks/get_pembayaran_neks'] = 'a/a_pembayaran_neks/get_pembayaran_neks';
 $route['a_pembayaran_neks/cari_pembayaran_neks'] = 'a/a_pembayaran_neks/cari_pembayaran_neks';
 /*End Pembayaran Belum Dieksekusi*/
->>>>>>> 74d799cf1fb2dd854a89360d89ae34ab14b534b5
+
+/*Data Pasien*/
+$route['a_data_pasien'] = 'a/a_data_pasien';
+$route['a_data_pasien/get_data_pasien'] = 'a/a_data_pasien/get_data_pasien';
+$route['a_data_pasien/simpan'] = 'a/a_data_pasien/simpan';
+$route['a_data_pasien/cari_data_pasien'] = 'a/a_data_pasien/cari_data_pasien';
+$route['a_data_pasien/hapus'] = 'a/a_data_pasien/hapus';
+/*End Data Pasien*/
