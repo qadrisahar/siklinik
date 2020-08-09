@@ -12,7 +12,7 @@ class A_tindakan_neks extends CI_Controller {
 				$cek=$this->session->userdata('status');
 				$level=$this->session->userdata('level');
 				if($cek=='lginx' && $level=='mn'){
-					$d['title']='Belum Dieksekusi'; 
+					$d['title']='Data Tindakan Belum Dieksekusi'; 
                     $d['icon']='pe-7s-drawer';   
                     $d['content']='tindakan_neks/view';  
                     $this->load->view('home',$d);

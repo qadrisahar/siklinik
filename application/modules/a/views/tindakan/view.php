@@ -744,6 +744,44 @@ error_reporting(0);
 
         });
 
+        $('#done').click(function(){
+          Swal.fire({
+                title: 'Anda yakin ingin menyelasaikan proses ini?',
+                text: "Periksa kembali data tersebut!",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Tidak'
+                }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type    : 'POST',
+                        data    : {id:'<?=$no_registrasi?>'},
+                        url     : "<?php echo site_url('a_tindakan/proses_to_kasir');?>",
+                        success : function(data) {
+                            Swal.fire({
+                                  title: "Sukses!",
+                                  text: data,
+                                  type: "success",
+                                  timer: 2000
+                              }).then((result) => {
+                                location.replace("<?=base_url()?>a_tindakan_neks");
+                              });
+                        },
+                        error : function(){
+                            Swal.fire("Eror", "Terjadi kesalahan", "error");
+                        }
+                    });
+                }
+                }) 
+
+        });
+
+
     });
 
     function table_obat(){

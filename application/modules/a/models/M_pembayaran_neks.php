@@ -1,6 +1,6 @@
 <?php
 
-class M_tindakan_eks extends CI_Model {
+class M_pembayaran_neks extends CI_Model {
 
     var $table = 'registrasi r'; //nama tabel dari database
     var $select = array('r.no_registrasi','r.no_antrian','p.id_pasien','p.nama','p.nik','p.jenis_kelamin','ly.layanan','p.tgl_lahir','r.cancel');
@@ -42,7 +42,7 @@ class M_tindakan_eks extends CI_Model {
         $this->db->from($this->table);
         $this->db->join('pasien p','p.id_pasien=r.id_pasien');
         $this->db->join('layanan ly','ly.id_layanan=r.id_layanan');
-        $this->db->where("r.eksekusi='y' AND r.cancel='n'");
+        $this->db->where("r.eksekusi='y' AND r.bayar='n' AND r.cancel='n'");
         $i = 0;
 
         foreach ($this->column_search as $item) // looping awal
@@ -76,6 +76,5 @@ class M_tindakan_eks extends CI_Model {
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
-
 
   }
