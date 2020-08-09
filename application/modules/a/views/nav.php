@@ -176,7 +176,7 @@ if($pembyr_neks>0){
                 <li>
                     <a href="<?=base_url().'a_stok_keluar_alkes'?>" class="navigation-list">
                         <i class="metismenu-icon pe-7s-next-2"></i>
-                        Stok Keluar Obat
+                        Stok Keluar Alkes
                     </a>
                 </li>
 

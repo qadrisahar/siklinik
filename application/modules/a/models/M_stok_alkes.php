@@ -1,12 +1,12 @@
 <?php
 
-class M_stok_keluar extends CI_Model {
+class M_stok_alkes extends CI_Model {
 
-    var $table = 'stok_keluar sm'; //nama tabel dari database
-    var $select = array('sm.id_stok_keluar', 'sm.kode_obat', 'o.nama_obat as nama_obat', 'kt.kategori as kategori', 'sm.jumlah','sm.w_insert','o.isi','o.id_satuan','o.id_unit','sm.keterangan');
-    var $column_order = array(null,'sm.kode_obat', 'o.nama_obat', 'kt.kategori','sm.w_insert');
-    var $column_search = array('sm.kode_obat','o.nama_obat','kt.kategori','sm.keterangan');
-    var $order = array('sm.kode_obat' => 'asc');
+    var $table = 'stok_alkes s'; //nama tabel dari database
+    var $select = array('s.kode_alkes', 'o.nama_alkes as nama_alkes', 'kt.kategori as kategori', 'st.satuan as satuan', 's.stok','o.id_satuan','o.id_unit','o.isi');
+    var $column_order = array(null,'s.kode_alkes');
+    var $column_search = array('s.kode_alkes');
+    var $order = array('s.kode_alkes' => 'asc');
 
     public function __construct()
     {
@@ -38,10 +38,11 @@ class M_stok_keluar extends CI_Model {
 
     private function _get_datatables_query()
     {
-      $this->db->select($this->select);
-      $this->db->from($this->table)
-      ->join('obat o','o.kode_obat=sm.kode_obat')
-      ->join('kategori_obat kt','kt.id_kategori=o.id_kategori')->order_by('sm.w_insert','desc');
+        $this->db->select($this->select);
+        $this->db->from($this->table)
+        ->join('alkes o','o.kode_alkes=s.kode_alkes')
+        ->join('kategori_alkes kt','kt.id_kategori=o.id_kategori')
+        ->join('satuan_alkes st','st.id_satuan=o.id_satuan');
         $i = 0;
 
         foreach ($this->column_search as $item) // looping awal
@@ -57,7 +58,6 @@ class M_stok_keluar extends CI_Model {
                 {
                     $this->db->or_like($item, $_POST['search']['value']);
                 }
-
                 if(count($this->column_search) - 1 == $i)
                     $this->db->group_end();
             }
@@ -74,20 +74,4 @@ class M_stok_keluar extends CI_Model {
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
-
-    public function insert($dt){
-        $q = $this->db->insert('stok_keluar',$dt);
-        return $q;
-    }
-
-    public function update($dt,$id){
-        $q = $this->db->update('stok_keluar',$dt,$id);
-        return $q;
-    }
-
-    public function delete($id){
-        $q = $this->db->delete('stok_keluar',$id);
-        return $q;
-    }
-
-  }
+}

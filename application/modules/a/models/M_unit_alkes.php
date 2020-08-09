@@ -1,12 +1,12 @@
 <?php
 
-class M_stok_keluar extends CI_Model {
+class M_unit_alkes extends CI_Model {
 
-    var $table = 'stok_keluar sm'; //nama tabel dari database
-    var $select = array('sm.id_stok_keluar', 'sm.kode_obat', 'o.nama_obat as nama_obat', 'kt.kategori as kategori', 'sm.jumlah','sm.w_insert','o.isi','o.id_satuan','o.id_unit','sm.keterangan');
-    var $column_order = array(null,'sm.kode_obat', 'o.nama_obat', 'kt.kategori','sm.w_insert');
-    var $column_search = array('sm.kode_obat','o.nama_obat','kt.kategori','sm.keterangan');
-    var $order = array('sm.kode_obat' => 'asc');
+    var $table = 'unit_alkes u'; //nama tabel dari database
+    var $select = array('u.id_unit', 'u.unit');
+    var $column_order = array(null,'u.unit');
+    var $column_search = array('u.unit');
+    var $order = array('u.unit' => 'asc');
 
     public function __construct()
     {
@@ -38,16 +38,15 @@ class M_stok_keluar extends CI_Model {
 
     private function _get_datatables_query()
     {
-      $this->db->select($this->select);
-      $this->db->from($this->table)
-      ->join('obat o','o.kode_obat=sm.kode_obat')
-      ->join('kategori_obat kt','kt.id_kategori=o.id_kategori')->order_by('sm.w_insert','desc');
+        $this->db->select($this->select);
+        $this->db->from($this->table);
         $i = 0;
 
         foreach ($this->column_search as $item) // looping awal
         {
             if($_POST['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
             {
+
                 if($i===0) // looping awal
                 {
                     $this->db->group_start();
@@ -76,17 +75,17 @@ class M_stok_keluar extends CI_Model {
     }
 
     public function insert($dt){
-        $q = $this->db->insert('stok_keluar',$dt);
+        $q = $this->db->insert('unit_alkes',$dt);
         return $q;
     }
 
     public function update($dt,$id){
-        $q = $this->db->update('stok_keluar',$dt,$id);
+        $q = $this->db->update('unit_alkes',$dt,$id);
         return $q;
     }
 
     public function delete($id){
-        $q = $this->db->delete('stok_keluar',$id);
+        $q = $this->db->delete('unit_alkes',$id);
         return $q;
     }
 

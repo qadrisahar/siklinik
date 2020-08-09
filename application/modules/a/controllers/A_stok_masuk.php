@@ -52,7 +52,7 @@ class A_stok_masuk extends CI_Controller {
 				}
     			$hasilBagi=($dt->jumlah-$sisaBagi)/$dt->isi;
 				$stok=$hasilBagi;
-				if($stok==0){
+				if($dt->jumlah==0){
 					$stok='<span class="badge badge-danger">Kosong</span>';
 				}else{
 					$stok=$stok.' '.$dt->id_unit.' '.$stok_satuan;

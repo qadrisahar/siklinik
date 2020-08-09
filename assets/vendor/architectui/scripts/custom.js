@@ -52,6 +52,57 @@ $('document').ready(function(){
     $('#kategori').val('');
   }
 
+  $('#cari_alkes').keyup(function(){
+    reset_alkes();
+    var query = $(this).val();
+    if(query.length >= 3)
+    {
+         $.ajax({
+              url:base_url+'search_data/cari_alkes',
+              method:"POST",
+              data:{query:query},
+              success:function(data)
+              {
+                   $('#list_alkes').fadeIn();
+                   $('#list_alkes').html(data);
+              }
+         });
+    }else {
+      $('#list_alkes').fadeOut();
+    }
+  });
+
+  $(document).on('click', 'li', function(){
+      var string=$(this).text();
+      if (string=='Alkes Not Found'){
+        $('#kode_alkes').val('');
+      }else{
+
+        var hb=$(this).data('hb');
+        var hj=$(this).data('hj');
+        var unit=$(this).data('unit');
+        var isi=$(this).data('isi');
+        var explode= string.split("/");
+        var kode_alkes = explode[0];
+        var nama_alkes = explode[1];
+        var kategori = explode[2];
+        $('#kode_alkes').val(kode_alkes);
+        $('#nama_alkes').val(nama_alkes);
+        $('#kategori').val(kategori);
+        $('#unit').val(unit);
+        $('#isi').val(isi);
+        $('#harga_jual').val(hj);
+        $('#harga_beli').val(hb);
+        $('#list_alkes').fadeOut();
+      }
+  });
+
+  function reset_alkes(){
+    $('#kode_alkes').val('');
+    $('#nama_alkes').val('');
+    $('#kategori').val('');
+  }
+
   $(".vertical-nav-menu").metisMenu();
   $(".close-sidebar-btn").click(function(){
     $(".app-container").toggleClass("closed-sidebar");

@@ -17,20 +17,19 @@
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 p-4 mb-3 card">  
-        <div class="table-place-full ">      
-            <table class="table table-bordered dt-responsive nowrap table-striped table-hover" style="width:100%" id="t_registrasi">
+        <div class="table-action mb-2">
+          <div class="text-right">
+          </div>
+        </div> 
+        <div class="table-place-full">      
+            <table class="table table-bordered dt-responsive nowrap table-striped table-hover" style="width:100%" id="t_kategori">
                 <thead class="thead-light">
                 <tr>
                   <th scope="col" class="text-center">No</th>
-                  <th scope="col" class="text-center">No. Registrasi</th>
-                  <th scope="col" class="text-center">No. Antrian</th>
-                  <th scope="col" class="text-center">ID Pasien</th>
-                  <th scope="col" class="text-center">Nama</th>
-                  <th scope="col" class="text-center">NIK</th>
-                  <th scope="col" class="text-center">Jenis Kelamin</th>
-                  <th scope="col" class="text-center">Usia</th>
-                  <th scope="col" class="text-center">Layanan</th>
-                  <th scope="col" class="datatable-nosort text-center">Aksi</th>
+                  <th scope="col" class="text-center">Kode Barang</th>
+                  <th scope="col" class="text-center">Nama Barang</th>
+                  <th scope="col" class="text-center">Kategori</th>
+                  <th scope="col" class="text-center">Stok</th>
                 </tr>
                 </thead>
                 <tbody>                          
@@ -45,11 +44,10 @@
     $('document').ready(function(){
 
       var table;
-      table = $('#t_registrasi').DataTable({
+      table = $('#t_kategori').DataTable({
           scrollCollapse: true,
           autoWidth: false,
-          scrollX: true,
-          responsive: false,
+          responsive: true,
           "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
           "language": {
             "info": "_START_-_END_ of _TOTAL_ entries",
@@ -62,7 +60,7 @@
           "order": [],
 
           "ajax": {
-              "url": "<?php echo site_url('a_tindakan_neks/get_tindakan_neks')?>",
+              "url": "<?php echo site_url('a_data_stok_alkes/get_data_stok_alkes')?>",
               "type": "POST"
           },
           "columnDefs": [
@@ -73,24 +71,6 @@
           ],
 
       });
-
-      $('#t_registrasi').on( 'click', 'tr .edit', function () {
-        $('.modal-load').show();
-        $('#form').parsley().reset();
-          var id = $(this).data("id");
-          $.ajax({
-            type    : 'POST',
-            data    : {id:id},
-            url     : "<?php echo site_url('a_unit/cari_unit');?>",
-            dataType: 'json',
-            success : function(data) {
-              $('#id').val(data.id);
-              $('#unit').val(data.unit);
-              $('.modal-load').hide();
-            }
-          });
-
-        });
 
     });
   </script>

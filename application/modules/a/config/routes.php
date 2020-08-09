@@ -14,6 +14,7 @@ $route['a_dashboard_kb'] = 'a/a_dashboard_kb';
 
 /*Search Data*/
 $route['search_data/cari_obat'] = 'a/search_data/cari_obat';
+$route['search_data/cari_alkes'] = 'a/search_data/cari_alkes';
 $route['search_data/data_obat_tindakan'] = 'a/search_data/data_obat_tindakan';
 $route['search_data/data_tikhus_tindakan'] = 'a/search_data/data_tikhus_tindakan';
 $route['search_data/data_lainlain_tindakan'] = 'a/search_data/data_lainlain_tindakan';
@@ -208,12 +209,72 @@ $route['a_tindakan/hapus'] = 'a/a_tindakan/hapus';
 $route['a_tindakan/proses_to_kasir'] = 'a/a_tindakan/proses_to_kasir';
 /*End  tindakan*/
 
+<<<<<<< HEAD
 /* pembayaran*/
 $route['a_pembayaran'] = 'a/a_pembayaran';
 /*End  pembayaran*/
 
+=======
+<<<<<<< HEAD
+/*Data kategori alkes*/
+$route['a_kategori_alkes'] = 'a/a_kategori_alkes';
+$route['a_kategori_alkes/get_kategori_alkes'] = 'a/a_kategori_alkes/get_kategori_alkes';
+$route['a_kategori_alkes/simpan'] = 'a/a_kategori_alkes/simpan';
+$route['a_kategori_alkes/cari_kategori_alkes'] = 'a/a_kategori_alkes/cari_kategori_alkes';
+$route['a_kategori_alkes/hapus'] = 'a/a_kategori_alkes/hapus';
+/*End Data kategori alkes*/
+
+/*Data satuan alkes*/
+$route['a_satuan_alkes'] = 'a/a_satuan_alkes';
+$route['a_satuan_alkes/get_satuan_alkes'] = 'a/a_satuan_alkes/get_satuan_alkes';
+$route['a_satuan_alkes/simpan'] = 'a/a_satuan_alkes/simpan';
+$route['a_satuan_alkes/cari_satuan_alkes'] = 'a/a_satuan_alkes/cari_satuan_alkes';
+$route['a_satuan_alkes/hapus'] = 'a/a_satuan_alkes/hapus';
+/*End Data satuan alkes*/
+
+/*Data unit alkes*/
+$route['a_unit_alkes'] = 'a/a_unit_alkes';
+$route['a_unit_alkes/get_unit_alkes'] = 'a/a_unit_alkes/get_unit_alkes';
+$route['a_unit_alkes/simpan'] = 'a/a_unit_alkes/simpan';
+$route['a_unit_alkes/cari_unit_alkes'] = 'a/a_unit_alkes/cari_unit_alkes';
+$route['a_unit_alkes/hapus'] = 'a/a_unit_alkes/hapus';
+/*End Data unit alkes*/
+
+/*Data obat_alkes*/
+$route['a_alkes'] = 'a/a_alkes';
+$route['a_alkes/get_alkes'] = 'a/a_alkes/get_alkes';
+$route['a_alkes/simpan'] = 'a/a_alkes/simpan';
+$route['a_alkes/cari_alkes'] = 'a/a_alkes/cari_alkes';
+$route['a_alkes/hapus'] = 'a/a_alkes/hapus';
+/*End Data obat_alkes*/
+
+/*Data Stok Alkes*/
+$route['a_data_stok_alkes'] = 'a/a_data_stok_alkes';
+$route['a_data_stok_alkes/get_data_stok_alkes'] = 'a/a_data_stok_alkes/get_data_stok_alkes';
+/*End Data Stok Alkes*/
+
+/*Data Stok Masuk Alkes*/
+$route['a_stok_masuk_alkes'] = 'a/a_stok_masuk_alkes';
+$route['a_stok_masuk_alkes/add'] = 'a/a_stok_masuk_alkes/add';
+$route['a_stok_masuk_alkes/get_stok_masuk_alkes'] = 'a/a_stok_masuk_alkes/get_stok_masuk_alkes';
+$route['a_stok_masuk_alkes/simpan'] = 'a/a_stok_masuk_alkes/simpan';
+$route['a_stok_masuk_alkes/cari_stok_masuk_alkes'] = 'a/a_stok_masuk_alkes/cari_stok_masuk_alkes';
+$route['a_stok_masuk_alkes/hapus'] = 'a/a_stok_masuk_alkes/hapus';
+/*End Data Stok Masuk Alkes*/
+
+/*Data Stok Keluar Alkes*/
+$route['a_stok_keluar_alkes'] = 'a/a_stok_keluar_alkes';
+$route['a_stok_keluar_alkes/add'] = 'a/a_stok_keluar_alkes/add';
+$route['a_stok_keluar_alkes/get_stok_keluar_alkes'] = 'a/a_stok_keluar_alkes/get_stok_keluar_alkes';
+$route['a_stok_keluar_alkes/simpan'] = 'a/a_stok_keluar_alkes/simpan';
+$route['a_stok_keluar_alkes/cari_stok_keluar_alkes'] = 'a/a_stok_keluar_alkes/cari_stok_keluar_alkes';
+$route['a_stok_keluar_alkes/hapus'] = 'a/a_stok_keluar_alkes/hapus';
+/*End Data Stok Keluar Alkes*/
+=======
+>>>>>>> cc06515e8e7b520ba3b5534f1c9395ea84fd499d
 /*Pembayaran Belum Dieksekusi*/
 $route['a_pembayaran_neks'] = 'a/a_pembayaran_neks';
 $route['a_pembayaran_neks/get_pembayaran_neks'] = 'a/a_pembayaran_neks/get_pembayaran_neks';
 $route['a_pembayaran_neks/cari_pembayaran_neks'] = 'a/a_pembayaran_neks/cari_pembayaran_neks';
 /*End Pembayaran Belum Dieksekusi*/
+>>>>>>> 74d799cf1fb2dd854a89360d89ae34ab14b534b5
