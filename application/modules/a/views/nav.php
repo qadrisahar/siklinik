@@ -97,7 +97,7 @@ if($pembyr_neks>0){
                     </a>
                 </li>
                 <li>
-                    <a href="<?=base_url().'a_reg_pasien_lama'?>" class="navigation-list">
+                    <a href="<?=base_url().'a_data_pasien'?>" class="navigation-list">
                         <i class="metismenu-icon pe-7s-user"></i>
                         Data Pasien
                     </a>

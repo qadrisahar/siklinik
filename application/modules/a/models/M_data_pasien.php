@@ -75,4 +75,19 @@ class M_data_pasien extends CI_Model {
         }
     }
 
+    // public function insert($dt){
+    //     $q = $this->db->insert('kategori_obat',$dt);
+    //     return $q;
+    // }
+
+    public function update($dt,$id){
+        $q = $this->db->update('pasien',$dt,$id);
+        return $q;
+    }
+
+    public function delete($id){
+        $q = $this->db->delete('pasien',$id);
+        return $q;
+    }
+
   }

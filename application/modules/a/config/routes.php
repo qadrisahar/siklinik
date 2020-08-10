@@ -279,3 +279,14 @@ $route['a_pembayaran_neks'] = 'a/a_pembayaran_neks';
 $route['a_pembayaran_neks/get_pembayaran_neks'] = 'a/a_pembayaran_neks/get_pembayaran_neks';
 $route['a_pembayaran_neks/cari_pembayaran_neks'] = 'a/a_pembayaran_neks/cari_pembayaran_neks';
 /*End Pembayaran Belum Dieksekusi*/
+<<<<<<< HEAD
+=======
+
+/*Data Pasien*/
+$route['a_data_pasien'] = 'a/a_data_pasien';
+$route['a_data_pasien/get_data_pasien'] = 'a/a_data_pasien/get_data_pasien';
+$route['a_data_pasien/simpan'] = 'a/a_data_pasien/simpan';
+$route['a_data_pasien/cari_data_pasien'] = 'a/a_data_pasien/cari_data_pasien';
+$route['a_data_pasien/hapus'] = 'a/a_data_pasien/hapus';
+/*End Data Pasien*/
+>>>>>>> 33d25ea84eba44a4f701b75acff8287f97590638
