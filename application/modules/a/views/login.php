@@ -62,7 +62,7 @@
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Copyright@<a href="#">BidanAndalan_Ta</a>
+					Copyright@<a href="#">BidanAndalanTa</a>
 				</div>
 			</div>
 		</div>

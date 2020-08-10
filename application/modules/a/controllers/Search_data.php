@@ -81,6 +81,36 @@ class Search_data extends CI_Controller {
 	        
 	        echo json_encode($table);
 		}
+
+		function data_alkes_tindakan()
+	    {
+			$no_registrasi=$this->input->post('no_registrasi');
+			$this->db->select('lo.id,lo.kode_alkes,o.nama_alkes,kt.kategori,lo.keterangan,lo.jumlah,lo.harga_jual,lo.total,o.id_satuan');
+			$this->db->from('layanan_alkes lo')
+			->join('alkes o','o.kode_alkes=lo.kode_alkes')
+			->join('kategori_alkes kt','kt.id_kategori=o.id_kategori')->where('lo.no_registrasi',$no_registrasi)->order_by('lo.w_insert','desc');
+			$tables=$this->db->get();
+			$output='';
+			$i=1;
+			$total=0;
+			foreach($tables->result() as $dt) {
+				$total+=$dt->total;
+				$output.='<tr>';
+				$output.='<td class="text-center">'.$i++.'</td>';
+				$output.='<td>'.$dt->kode_alkes.'</td>';
+				$output.='<td>'.$dt->nama_alkes.'</td>';
+				$output.='<td>'.$dt->kategori.'</td>';
+				$output.='<td>'.$dt->keterangan.'</td>';
+				$output.='<td>'.$dt->jumlah.' '.$dt->id_satuan.'</td>';
+				$output.='<td>'.toRp($dt->total).'</td>';
+				$output.='<td class="text-center">'.'<span class="btn-action btn-action-delete delete-alkes" data-id="'.$dt->id.'"><i class="fa fa-trash" aria-hidden="true"></i> Hapus </span>'.'</td>';
+				$output.='</tr>';
+			}
+			$table['table']=$output;
+			$table['total']=toRp($total);
+	        
+	        echo json_encode($table);
+		}
 		
 		function data_tikhus_tindakan()
 	    {

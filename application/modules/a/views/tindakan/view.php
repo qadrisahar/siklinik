@@ -416,6 +416,104 @@ error_reporting(0);
   </div>
 </div>
 
+<div class="modal fade mt-3" id="modal-tambah-alkes" role="dialog" aria-labelledby="modal-alkes" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-alkes">Data Obat</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+        <div class="buttonload modal-load">
+                <i class="fa fa-spinner fa-spin modal-load-spinner"></i>
+        </div>
+      <div class="modal-body">
+        <form name="form-alkes" id="form-alkes" enctype="multipart/form-data">
+        <div class="row pl-5 pr-5">
+          <div class="col-md-12 mb-12 pl-2 pr-2">
+                <label for="validationCustomUsername">Cari Alkes</label>
+                <div class="input-group" id="no">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="pe-7s-search"></i></span>
+                    </div>
+                    <input type="text" class="form-control" name="cari_alkes" id="cari_alkes" placeholder="Cari Dengan Keyword Kode Alkes atau Nama Alkes" aria-describedby="inputGroupPrepend" data-parsley-errors-container="#cari_error" required>
+                </div>
+                <div id="cari_error"></div>
+                <div id="list_alkes"></div>
+                
+            </div><br>
+        </div>
+        <hr>
+        <div class="row">
+        <input type="hidden" class="form-control" name="harga_jual_alkes" id="harga_jual_alkes" required readonly>
+            <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-sm-12">Kode Alkes</label>
+                  <div class="col-sm-12 col-md-12">
+                    <input class="form-control" type="text" name="kode_alkes" id="kode_alkes" placeholder="Kode Alkes" required readonly>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12">Nama Alkes</label>
+                  <div class="col-sm-12 col-md-12">
+                    <input class="form-control" type="text" name="nama_alkes" id="nama_alkes" placeholder="Nama Alkes" required readonly>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12">Kategori</label>
+                  <div class="col-md-12 col-sm-12">
+                  <input class="form-control" type="text" name="kategori_alkes" id="kategori_alkes" placeholder="Kategori" required readonly>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                  <label>Unit <span class="red"></span></label>
+                      <input type="text" class="form-control" name="unit_alkes" id="unit_alkes" required readonly>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-sm-12">
+                  <label>Isi Per Unit<span class="red"></span></label>
+                      <input type="text" class="form-control" name="isi_alkes" id="isi_alkes" required readonly>
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+                    <div class="col-sm-12">
+                    <label>Keterangan<span class="red"></span></label>
+                        <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" required>
+                    </div>
+                </div>
+                <div class="form-group row pl-3 pr-3">
+                    <div class="col-sm-6">
+                    <label>Jumlah</label>
+                        <input class="form-control" type="number" name="jumlah" id="jumlah" value="1" data-parsley-min="1" required>
+                    </div>
+                    <div class="col-sm-6">
+                    <label>Type Stok</label>
+                        <select class="form-control" name="type_stok" id="type_stok">
+                            <option value="satuan">Satuan</option>
+                            <option value="unit">Unit</option>
+                        </select>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-md" name="simpan_alkes" id="simpan_alkes">
+              <i class="fa fa-save"></i> Simpan 
+          </button>
+          <button type="button" class="btn btn-danger btn-md" name="cancel" id="cancel" data-dismiss="modal">
+          <i class="fa fa-ban"></i> Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="modal fade mt-3" id="modal-tambah-tikhus" role="dialog" aria-labelledby="modal-tikhus" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-md">
@@ -508,6 +606,7 @@ error_reporting(0);
   <script>
     $('document').ready(function(){
       table_obat();
+      table_alkes();
       table_tikhus();
       table_lainlain();
       <?php
@@ -564,6 +663,35 @@ error_reporting(0);
                   process_done1(param,'<i class="fa fa-save"></i> Simpan');      
                   Swal.fire('Sukses!',data,'success');
                   $('#modal-tambah-obat').modal('hide');
+                }
+              });
+            }else {
+              return false();
+            }
+
+          });
+
+          $("#simpan_alkes").click(function(e) {
+            e.preventDefault();
+            if($('#form-alkes').parsley().validate()){
+              var param = this;
+                process1(param);
+              var form = $("#form-alkes")[0];
+              var form_data = new FormData(form);
+			        form_data.append("no_registrasi", '<?=$no_registrasi?>');
+              $.ajax({
+                type    : 'POST',
+                data    : form_data,
+                contentType : false,
+                processData : false,
+                cache: false,
+                async:true,
+                url     : "<?php echo site_url('a_tindakan/simpan_alkes');?>",
+                success : function(data) {
+                  table_alkes();
+                  process_done1(param,'<i class="fa fa-save"></i> Simpan');      
+                  Swal.fire('Sukses!',data,'success');
+                  $('#modal-tambah-alkes').modal('hide');
                 }
               });
             }else {
@@ -636,6 +764,12 @@ error_reporting(0);
         $('.modal-load').hide(); 
       });
 
+      $("#tambah-alkes").click(function() {
+        $('#form-alkes').parsley().reset();
+        $('#form-alkes')[0].reset(); 
+        $('.modal-load').hide(); 
+      });
+
       $("#tambah-tikhus").click(function() {
         $('#form-tikhus').parsley().reset();
         $('#form-tikhus')[0].reset(); 
@@ -670,6 +804,38 @@ error_reporting(0);
                         success : function(data) {
                             Swal.fire('Sukses!','Data tersebut berhasil dihapus.','success');
                             table_obat();
+                        },
+                        error : function(){
+                            Swal.fire("Eror", "Terjadi kesalahan", "error");
+                        }
+                    });
+                }
+                })   
+
+        });
+
+        $('#t_alkes').on( 'click', 'tr .delete-alkes', function () {
+          var id = $(this).data("id");
+          Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini?',
+                text: "Periksa kembali data tersebut!",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Tidak'
+                }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type    : 'POST',
+                        data    : {id:id},
+                        url     : "<?php echo site_url('a_tindakan/hapus_alkes');?>",
+                        success : function(data) {
+                            Swal.fire('Sukses!','Data tersebut berhasil dihapus.','success');
+                            table_alkes();
                         },
                         error : function(){
                             Swal.fire("Eror", "Terjadi kesalahan", "error");
@@ -792,6 +958,18 @@ error_reporting(0);
             dataType: 'json',
             success : function(data) {
               $('#t_obat tbody').html(data.table);
+            }
+          });
+    }
+
+    function table_alkes(){
+      $.ajax({
+            type    : 'POST',
+            data    : {no_registrasi:'<?=$no_registrasi?>'},
+            url     : "<?php echo site_url('search_data/data_alkes_tindakan');?>",
+            dataType: 'json',
+            success : function(data) {
+              $('#t_alkes tbody').html(data.table);
             }
           });
     }

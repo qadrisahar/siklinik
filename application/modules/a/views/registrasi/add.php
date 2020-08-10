@@ -254,11 +254,11 @@
                 process_done1(param,'<i class="fa fa-save"></i> Simpan');      
                     Swal.fire({
                         title: "Sukses!",
-                        text: data,
+                        text: "Data Sukses Disimpan",
                         type: "success",
                         timer: 2000
                     }).then((result) => {
-                        location.reload(true);
+                        location.replace("<?=base_url()?>cetak/antrian?x="+btoa(data));
 
                     });
                 }

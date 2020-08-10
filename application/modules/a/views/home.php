@@ -75,7 +75,7 @@
                 <div class="app-footer-right">
                     <ul class="nav">
                         <li class="nav-item">
-                            Copyright@<a href="#" style="color: #8dc73d;">BidanAndalan_Ta</a> 
+                            Copyright@<a href="#" style="color: #8dc73d;">BidanAndalanTa</a> 
                         </li>                                        
                     </ul>
                 </div>

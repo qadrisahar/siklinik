@@ -37,212 +37,14 @@ class A_pembayaran extends CI_Controller {
 
 			}
 
-			function get_pembayaran()
-	    {
-			$id_layanan=$this->input->post('id');
-			$database=$this->db->database;
-			$tables=$this->db->query("SELECT t.TABLE_NAME AS myTables FROM INFORMATION_SCHEMA.TABLES AS t WHERE t.TABLE_SCHEMA = '$database' AND t.TABLE_NAME LIKE 'layanan_$id_layanan%' ")->result_array();    
-			$output='';
-			$i=1;
-			foreach($tables as $key => $val) {
-				$data_table=$val['myTables'];
-				$param_replace='layanan_'.$id_layanan.'_';
-				$data_table_show=str_replace('-',' ',str_replace($param_replace,'',$data_table));
-				$output.='<tr>';
-				$output.='<td class="text-center">'.$i++.'</td>';
-				$output.='<td style="text-transform: capitalize;">'.($data_table_show).'</td>';
-				$output.='<td class="text-center">'.'<a href="#" class="btn-action edit" data-id="'.$data_table.'" data-toggle="modal" data-target="#modal-tambah"><i class="fa fa-edit" aria-hidden="true"></i> Edit </a>
-				<a href="'.base_url().'a_pembayaran_detail?id='.$data_table.'&id2='.$id_layanan.'" class="btn-action btn-action-warning"><i class="fa fa-edit" aria-hidden="true"></i> Detail Data </a>
-				<span class="btn-action btn-action-delete delete" data-id="'.$data_table.'"><i class="fa fa-trash" aria-hidden="true"></i> Hapus </span>'.'</td>';
-				$output.='</tr>';
-			}
-			$table['table']=$output;
-	        
-	        echo json_encode($table);
-	    }
-
-			public function simpan()
-				{
-					$cek=$this->session->userdata('status');
-					$level=$this->session->userdata('level');
-					if($cek=='lginx' && $level=='mn'){
-						    error_reporting(0);
-								date_default_timezone_set('Asia/Makassar');
-								$table=$this->input->get('param');
-								$fields = $this->db->field_data($table);
-								foreach ($fields as $field)
-								{
-								if($field->name=='no_registrasi' || $field->name=='w_insert' || $field->name=='w_update' || $field->name=='updated_by'){
-									continue;
-								}
-								$dt[$field->name]=$this->input->post(''.$table.'_'.$field->name.'');
-								}
-								$no_registrasi=$this->input->post('no_registrasi');
-								$dt['updated_by']=$this->session->userdata('id_user');
-								$q_cek=$this->db->select('no_registrasi')->where('no_registrasi',$no_registrasi)->get($table)->num_rows();
-								if($q_cek>0){
-									$id['no_registrasi']=$no_registrasi;
-									$dt['w_update']=date('Y-m-d H:i:s');
-									$this->db->update($table,$dt,$id);
-									echo "Data Sukses DiUpdate";
-								}else{
-									$dt['no_registrasi']=$no_registrasi;
-									$dt['w_insert']=date('Y-m-d H:i:s');
-									$this->db->insert($table,$dt);
-									echo "Data Sukses DiSimpan";
-								}
-								
-					}else {
-						  redirect('login/logout');
-					}
-
-				}
-
-				public function simpan_obat()
-				{
-					$cek=$this->session->userdata('status');
-					$level=$this->session->userdata('level');
-					if($cek=='lginx' && $level=='mn'){
-						    error_reporting(0);
-								date_default_timezone_set('Asia/Makassar');
-								$key=$this->input->post('id');
-								$kode_obat=$this->input->post('kode_obat');
-								$type_stok=$this->input->post('type_stok');
-								$harga_jual=RptoDb($this->input->post('harga_jual'));
-								$jumlah= $this->input->post('jumlah');
-								$keterangan= $this->input->post('keterangan');
-								$no_registrasi= $this->input->post('no_registrasi');
-								$isi= $this->input->post('isi');
-								if($type_stok=='unit'){
-									$stok_keluar=$jumlah*$isi;
-								}else{
-									$stok_keluar=$jumlah;
-								}
-								$total=$stok_keluar*$harga_jual;
-								$dt['kode_obat'] = $kode_obat;
-								$dt['jumlah'] =$stok_keluar;
-								$dt['harga_jual'] =$harga_jual;
-								$dt['total'] =$total;
-								$dt['keterangan'] =$keterangan;
-								$dt['no_registrasi'] =$no_registrasi;
-								$dt['updated_by'] = $this->session->userdata('id_user');
-								$dt['id'] = 'ID-'.uniqid();
-								$dt['w_insert'] =date('Y-m-d H:i:s');
-								$this->db->insert('layanan_obat',$dt);
-								echo "Data Sukses DiSimpan";
-					}else {
-						  redirect('login/logout');
-					}
-
-				}
-
-				public function simpan_tikhus()
-				{
-					$cek=$this->session->userdata('status');
-					$level=$this->session->userdata('level');
-					if($cek=='lginx' && $level=='mn'){
-						    error_reporting(0);
-								date_default_timezone_set('Asia/Makassar');
-								$key=$this->input->post('id');
-								$pembayaran_khusus=$this->input->post('pembayaran_khusus');
-								$total=RptoDb($this->input->post('total_tikhus'));
-								$no_registrasi= $this->input->post('no_registrasi');
-
-								$dt['pembayaran_khusus'] = $pembayaran_khusus;
-								$dt['total'] =$total;
-								$dt['no_registrasi'] =$no_registrasi;
-								$dt['updated_by'] = $this->session->userdata('id_user');
-								$dt['id'] = 'ID-'.uniqid();
-								$dt['w_insert'] =date('Y-m-d H:i:s');
-								$this->db->insert('layanan_pembayaran_khusus',$dt);
-								echo "Data Sukses DiSimpan";
-					}else {
-						  redirect('login/logout');
-					}
-
-				}
-
-				public function simpan_lainlain()
-				{
-					$cek=$this->session->userdata('status');
-					$level=$this->session->userdata('level');
-					if($cek=='lginx' && $level=='mn'){
-						    error_reporting(0);
-								date_default_timezone_set('Asia/Makassar');
-								$key=$this->input->post('id');
-								$lainlain=$this->input->post('lainlain');
-								$total=RptoDb($this->input->post('total_lainlain'));
-								$no_registrasi= $this->input->post('no_registrasi');
-
-								$dt['lainlain'] = $lainlain;
-								$dt['total'] =$total;
-								$dt['no_registrasi'] =$no_registrasi;
-								$dt['updated_by'] = $this->session->userdata('id_user');
-								$dt['id'] = 'ID-'.uniqid();
-								$dt['w_insert'] =date('Y-m-d H:i:s');
-								$this->db->insert('layanan_lainlain',$dt);
-								echo "Data Sukses DiSimpan";
-					}else {
-						  redirect('login/logout');
-					}
-
-				}
-
-
-					public function hapus_obat()
-						{
-							error_reporting(0);
-							$cek=$this->session->userdata('status');
-							$level=$this->session->userdata('level');
-							if($cek=='lginx' && $level=='mn'){
-										$id['id'] = $this->input->post('id');
-										$this->db->delete('layanan_obat',$id);
-										echo "Data Sukses Dihapus";
-							}else {
-								  redirect('login/logout');
-							}
-
-						}
-
-
-						public function hapus_tikhus()
-						{
-							error_reporting(0);
-							$cek=$this->session->userdata('status');
-							$level=$this->session->userdata('level');
-							if($cek=='lginx' && $level=='mn'){
-										$id['id'] = $this->input->post('id');
-										$this->db->delete('layanan_pembayaran_khusus',$id);
-										echo "Data Sukses Dihapus";
-							}else {
-								  redirect('login/logout');
-							}
-
-						}
-
-						public function hapus_lainlain()
-						{
-							error_reporting(0);
-							$cek=$this->session->userdata('status');
-							$level=$this->session->userdata('level');
-							if($cek=='lginx' && $level=='mn'){
-										$id['id'] = $this->input->post('id');
-										$this->db->delete('layanan_lainlain',$id);
-										echo "Data Sukses Dihapus";
-							}else {
-								  redirect('login/logout');
-							}
-
-						}
-
-						public function proses_to_kasir()
+						public function proses_selesai()
 						{
 							error_reporting(0);
 							$cek=$this->session->userdata('status');
 							$level=$this->session->userdata('level');
 							if($cek=='lginx' && $level=='mn'){
 										$id['no_registrasi'] = $this->input->post('id');
-										$dt['eksekusi']='y';
+										$dt['bayar']='n';
 										$this->db->update('registrasi',$dt,$id);
 										echo "Data Telah Diteruskan Ke Kasir";
 							}else {
@@ -250,6 +52,24 @@ class A_pembayaran extends CI_Controller {
 							}
 
 						}
+
+						public function cetak_kwitansi()
+			{
+				$cek=$this->session->userdata('status');
+				$level=$this->session->userdata('level');
+				if($cek=='lginx' && $level=='mn'){
+					$no_kwitansi=base64_decode($this->input->get('id'));
+					$d['title']='Cetak Kwitansi <b>'.$no_kwitansi.'</b>'; 
+                    $d['icon']='pe-7s-print';   
+					$d['content']='cetak/kwitansi';
+					$d['no_kwitansi']=$no_kwitansi;
+					$d['database']=$this->db->database;
+                    $this->load->view('home',$d);
+				}else {
+				    redirect('login/logout');
+				}
+
+			}
 
 	}
 

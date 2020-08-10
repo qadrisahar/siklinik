@@ -6,6 +6,24 @@
         margin: 1px;
         width: 100%;
 }
+.table_print tbody td {border-bottom:1px solid #c3c3c3 !important}
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        
+        #printArea, #printArea * {
+            visibility: visible;
+        }
+        #printArea {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 500px;
+        }
+        @page { margin-top: 0px;margin-bottom:0px; }
+    }
 </style>
 
 <div class="app-page-title">
@@ -23,7 +41,7 @@
         <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 p-4 mb-6 card">
             <form class="">
-                <div class="form-row" id="cetak_antrian">
+                <div class="form-row" id="printArea">
                     <div class="col-md-12">
                         <div class="form-row row-center">
                             <span><b>Klinik Bidan Andalanta</b></span>
@@ -54,7 +72,7 @@
                                 </tr>
                                 <tr>
                                     <td>Waktu</td>
-                                    <td> : <?=date('d-m-Y', strtotime($antrian->w_insert));?></td>
+                                    <td> : <?=datetime2($antrian->w_insert);?></td>
                                 </tr>
                             </table>
                         </div>
@@ -73,23 +91,11 @@
             </form>
 
             <div class="form-row row-center">
-                <button target="target_blank" type="button" class="btn btn-primary mt-0" onclick="printDiv()"><i class="fa fa-print"></i>
-                    Cetak</button>
+            <a href="javascript:window.print();" class="btn btn-primary btn-sm"><i
+                        class="fa fa-print"></i> Print (Ctrl+P)</a>
             </div>
     </div>
 </div>
-    <script> 
-        function printDiv() { 
-            var divContents = document.getElementById("cetak_antrian").innerHTML; 
-            var a = window.open('', '', 'height=500, width=500'); 
-            a.document.write('<html>'); 
-            a.document.write('<body style="text-align:center">'); 
-            a.document.write(divContents); 
-            a.document.write('</body></html>'); 
-            a.document.close(); 
-            a.print(); 
-        } 
-    </script> 
   <script>
    $('#loading').hide();
   </script>

@@ -5,7 +5,7 @@ class M_registrasi extends CI_Model {
     var $table = 'registrasi r'; //nama tabel dari database
     var $select = array('r.no_registrasi','r.no_antrian','p.id_pasien','p.nama','p.nik','p.jenis_kelamin','ly.layanan','p.tgl_lahir','r.cancel');
     var $column_order = array(null,'p.id_pasien','r.no_antrian','p.nama','p.nik','ly.layanan');
-    var $column_search = array('p.id_pasien','r.no_antrian','p.nama','p.nik','ly.layanan');
+    var $column_search = array('p.id_pasien','r.no_registrasi','r.no_antrian','p.nama','p.nik','ly.layanan');
     var $order = array('p.nama' => 'asc');
 
     public function __construct()

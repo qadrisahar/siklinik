@@ -91,8 +91,13 @@ $('document').ready(function(){
         $('#kategori').val(kategori);
         $('#unit').val(unit);
         $('#isi').val(isi);
+        $('#kategori_alkes').val(kategori);
+        $('#unit_alkes').val(unit);
+        $('#isi_alkes').val(isi);
         $('#harga_jual').val(hj);
         $('#harga_beli').val(hb);
+        $('#harga_jual_alkes').val(hj);
+        $('#harga_beli_alkes').val(hb);
         $('#list_alkes').fadeOut();
       }
   });

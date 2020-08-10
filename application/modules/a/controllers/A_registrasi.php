@@ -146,7 +146,7 @@ class A_registrasi extends CI_Controller {
 								$dt['updated_by'] = $this->session->userdata('id_user');
 								$dt['w_insert'] =date('Y-m-d H:i:s');
 								$this->m_registrasi->insert($dt);
-								echo "Data Sukses DiSimpan";								
+								echo $no_registrasi;								
 					}else {
 							redirect('login/logout');
 					}

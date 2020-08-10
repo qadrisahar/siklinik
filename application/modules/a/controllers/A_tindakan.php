@@ -138,6 +138,44 @@ class A_tindakan extends CI_Controller {
 
 				}
 
+				public function simpan_alkes()
+				{
+					$cek=$this->session->userdata('status');
+					$level=$this->session->userdata('level');
+					if($cek=='lginx' && $level=='mn'){
+						    error_reporting(0);
+								date_default_timezone_set('Asia/Makassar');
+								$key=$this->input->post('id');
+								$kode_alkes=$this->input->post('kode_alkes');
+								$type_stok=$this->input->post('type_stok');
+								$harga_jual=RptoDb($this->input->post('harga_jual_alkes'));
+								$jumlah= $this->input->post('jumlah');
+								$keterangan= $this->input->post('keterangan');
+								$no_registrasi= $this->input->post('no_registrasi');
+								$isi= $this->input->post('isi_alkes');
+								if($type_stok=='unit'){
+									$stok_keluar=$jumlah*$isi;
+								}else{
+									$stok_keluar=$jumlah;
+								}
+								$total=$stok_keluar*$harga_jual;
+								$dt['kode_alkes'] = $kode_alkes;
+								$dt['jumlah'] =$stok_keluar;
+								$dt['harga_jual'] =$harga_jual;
+								$dt['total'] =$total;
+								$dt['keterangan'] =$keterangan;
+								$dt['no_registrasi'] =$no_registrasi;
+								$dt['updated_by'] = $this->session->userdata('id_user');
+								$dt['id'] = 'ID-'.uniqid();
+								$dt['w_insert'] =date('Y-m-d H:i:s');
+								$this->db->insert('layanan_alkes',$dt);
+								echo "Data Sukses DiSimpan";
+					}else {
+						  redirect('login/logout');
+					}
+
+				}
+
 				public function simpan_tikhus()
 				{
 					$cek=$this->session->userdata('status');
@@ -199,6 +237,21 @@ class A_tindakan extends CI_Controller {
 							if($cek=='lginx' && $level=='mn'){
 										$id['id'] = $this->input->post('id');
 										$this->db->delete('layanan_obat',$id);
+										echo "Data Sukses Dihapus";
+							}else {
+								  redirect('login/logout');
+							}
+
+						}
+
+						public function hapus_alkes()
+						{
+							error_reporting(0);
+							$cek=$this->session->userdata('status');
+							$level=$this->session->userdata('level');
+							if($cek=='lginx' && $level=='mn'){
+										$id['id'] = $this->input->post('id');
+										$this->db->delete('layanan_alkes',$id);
 										echo "Data Sukses Dihapus";
 							}else {
 								  redirect('login/logout');
