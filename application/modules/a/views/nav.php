@@ -13,6 +13,20 @@ if($pembyr_neks>0){
 }else{
     $notif_pembyr_neks='';
 }
+
+$stok_kritis_alkes=$this->db->select('COUNT(sl.kode_alkes) as total')->join('alkes o','sl.kode_alkes=o.kode_alkes')->where("(sl.stok/o.isi) <= 10")->get('stok_alkes sl')->row()->total;
+if($stok_kritis_alkes>0){
+    $notif_kritis_alkes='<span class="badge badge-pill badge-danger">'.$stok_kritis_alkes.'</span>'; 
+}else{
+    $notif_kritis_alkes='';
+}
+
+$stok_kritis_obat=$this->db->select('COUNT(s.kode_obat) as total')->join('obat ob','s.kode_obat=ob.kode_obat')->where("(s.stok/ob.isi) <= 10")->get('stok s')->row()->total;
+if($stok_kritis_obat>0){
+    $notif_kritis_obat='<span class="badge badge-pill badge-danger">'.$stok_kritis_obat.'</span>'; 
+}else{
+    $notif_kritis_obat='';
+}
 ?>
 <div class="app-sidebar sidebar-shadow sidebar-text-white">
     <div class="app-header__logo">
@@ -153,6 +167,12 @@ if($pembyr_neks>0){
                         Stok Keluar Obat
                     </a>
                 </li>
+                <li>
+                    <a href="<?=base_url().'a_stok_kritis_obat'?>" class="navigation-list">
+                        <i class="metismenu-icon pe-7s-info"></i>
+                        Stok Kritis Obat <?=$notif_kritis_obat?>
+                    </a>
+                </li>
 
                 <li class="app-sidebar__heading">Inventori Bahan dan Alkes</li>
                 <li>
@@ -177,6 +197,12 @@ if($pembyr_neks>0){
                     <a href="<?=base_url().'a_stok_keluar_alkes'?>" class="navigation-list">
                         <i class="metismenu-icon pe-7s-next-2"></i>
                         Stok Keluar Alkes
+                    </a>
+                </li>
+                <li>
+                    <a href="<?=base_url().'a_stok_kritis_alkes'?>" class="navigation-list">
+                        <i class="metismenu-icon pe-7s-info"></i>
+                        Stok Kritis Alkes <?=$notif_kritis_alkes?>
                     </a>
                 </li>
 

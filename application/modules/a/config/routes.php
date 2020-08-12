@@ -288,8 +288,6 @@ $route['a_data_pasien/simpan'] = 'a/a_data_pasien/simpan';
 $route['a_data_pasien/cari_data_pasien'] = 'a/a_data_pasien/cari_data_pasien';
 $route['a_data_pasien/hapus'] = 'a/a_data_pasien/hapus';
 /*End Data Pasien*/
-<<<<<<< HEAD
-=======
 
 /*Data Pasien*/
 $route['a_detail_pasien'] = 'a/a_detail_pasien';
@@ -298,5 +296,12 @@ $route['a_detail_pasien/cari_detail_pasien'] = 'a/a_detail_pasien/cari_detail_pa
 /*End Data Pasien*/
 
 
+/*Data stok kritis alkes*/
+$route['a_stok_kritis_alkes'] = 'a/a_stok_kritis_alkes';
+$route['a_stok_kritis_alkes/get_stok_kritis_alkes'] = 'a/a_stok_kritis_alkes/get_stok_kritis_alkes';
+/*End Data stok kritis alkes*/
 
->>>>>>> 8a56543a1481a14eced41f7a01715b8d3c5dbf43
+/*Data stok kritis obat*/
+$route['a_stok_kritis_obat'] = 'a/a_stok_kritis_obat';
+$route['a_stok_kritis_obat/get_stok_kritis_obat'] = 'a/a_stok_kritis_obat/get_stok_kritis_obat';
+/*End Data stok kritis obat*/
