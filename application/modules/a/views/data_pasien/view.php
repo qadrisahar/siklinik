@@ -139,7 +139,7 @@
                                 <div class="col-sm-12 col-md-12">
                                     <input
                                         class="form-control"
-                                        type="date"
+                                        type="text"
                                         name="kontak"
                                         id="kontak"
                                         required="required">

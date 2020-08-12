@@ -1,11 +1,11 @@
 <?php
 
-class M_registrasi extends CI_Model {
+class M_registrasi_pasien extends CI_Model {
 
     var $table = 'registrasi r'; //nama tabel dari database
-    var $select = array('r.no_registrasi','r.no_antrian','p.id_pasien','p.nama','p.nik','p.jenis_kelamin','ly.layanan','p.tgl_lahir','r.cancel');
+    var $select = array('r.no_registrasi','r.no_antrian','p.id_pasien','p.nama','p.nik','p.jenis_kelamin','ly.layanan','p.tgl_lahir','r.bayar');
     var $column_order = array(null,'p.id_pasien','r.no_antrian','p.nama','p.nik','ly.layanan');
-    var $column_search = array('p.id_pasien','r.no_antrian','p.nama','p.nik','ly.layanan');
+    var $column_search = array('p.id_pasien','r.no_registrasi','r.no_antrian','p.nama','p.nik','ly.layanan');
     var $order = array('p.nama' => 'asc');
 
     public function __construct()
@@ -14,18 +14,18 @@ class M_registrasi extends CI_Model {
         $this->load->database();
     }
 
-    public function get_datatables($status_filter,$tgl_awal_filter,$tgl_akhir_filter)
+    public function get_datatables($id_pasien)
     {
-        $this->_get_datatables_query($status_filter,$tgl_awal_filter,$tgl_akhir_filter);
+        $this->_get_datatables_query($id_pasien);
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
 
-    function count_filtered($status_filter,$tgl_awal_filter,$tgl_akhir_filter)
+    function count_filtered($id_pasien)
     {
-        $this->_get_datatables_query($status_filter,$tgl_awal_filter,$tgl_akhir_filter);
+        $this->_get_datatables_query($id_pasien);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -36,17 +36,14 @@ class M_registrasi extends CI_Model {
         return $this->db->count_all_results();
     }
 
-    private function _get_datatables_query($status_filter,$tgl_awal_filter,$tgl_akhir_filter)
+    private function _get_datatables_query($id_pasien)
     {
-        $where='';
-        if(!empty($status_filter)){
-            $where.=" AND cancel='$status_filter'";
-        }
         $this->db->select($this->select);
         $this->db->from($this->table);
         $this->db->join('pasien p','p.id_pasien=r.id_pasien');
         $this->db->join('layanan ly','ly.id_layanan=r.id_layanan');
-        $this->db->where("DATE(r.w_insert) BETWEEN '$tgl_awal_filter' AND '$tgl_akhir_filter' $where");
+        $this->db->where('r.id_pasien', $id_pasien);
+        $this->db->where('r.cancel', 'n');
         $i = 0;
 
         foreach ($this->column_search as $item) // looping awal

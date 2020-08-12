@@ -288,3 +288,15 @@ $route['a_data_pasien/simpan'] = 'a/a_data_pasien/simpan';
 $route['a_data_pasien/cari_data_pasien'] = 'a/a_data_pasien/cari_data_pasien';
 $route['a_data_pasien/hapus'] = 'a/a_data_pasien/hapus';
 /*End Data Pasien*/
+<<<<<<< HEAD
+=======
+
+/*Data Pasien*/
+$route['a_detail_pasien'] = 'a/a_detail_pasien';
+$route['a_detail_pasien/get_detail_pasien'] = 'a/a_detail_pasien/get_detail_pasien';
+$route['a_detail_pasien/cari_detail_pasien'] = 'a/a_detail_pasien/cari_detail_pasien';
+/*End Data Pasien*/
+
+
+
+>>>>>>> 8a56543a1481a14eced41f7a01715b8d3c5dbf43

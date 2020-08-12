@@ -39,8 +39,9 @@ class A_data_pasien extends CI_Controller {
 				  		$row[] = ''.$dt->alamat.'';
 							$row[] =  '<center>
 							<a href="#" class="btn-action edit" data-id="'.$dt->id_pasien.'" data-toggle="modal" data-target="#modal-tambah"><i class="fa fa-edit" aria-hidden="true"></i> Edit </a>
-														<span class="btn-action btn-action-delete delete" data-id="'.$dt->id_pasien.'"><i class="fa fa-trash" aria-hidden="true"></i> Hapus </span>
-														</center>';
+							<a href="'.base_url().'a_detail_pasien?id='.base64_encode($dt->id_pasien).'" class="btn-action btn-action-warning"><i class="fa fa-eye" aria-hidden="true"></i> Detail Pasien </a>
+							<span class="btn-action btn-action-delete delete" data-id="'.$dt->id_pasien.'"><i class="fa fa-trash" aria-hidden="true"></i> Hapus </span>
+							</center>';
 
 	            $data[] = $row;
 	        }
@@ -104,7 +105,7 @@ class A_data_pasien extends CI_Controller {
 								$dt['email'] = $this->input->post('email');
 								$dt['tempat_lahir'] = $this->input->post('tempat_lahir');
 								$dt['tgl_lahir'] = $this->input->post('tgl_lahir');
-								$dt['tgl_lahir'] = $this->input->post('tgl_lahir');
+								$dt['kontak'] = $this->input->post('kontak');
 								$dt['kontak_2'] = $this->input->post('kontak_2');
 								$dt['id_pekerjaan'] = $this->input->post('id_pekerjaan');
 								$dt['id_pendidikan'] = $this->input->post('id_pendidikan');
