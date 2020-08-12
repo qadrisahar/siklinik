@@ -62,12 +62,15 @@ table tr td{vertical-align: top;}
                     </td>
                     </tr>
                     </table>
+                    <?php
+
+                    ?>
                     <table style="margin-bottom: 20px; width:100%">
                     <tr>
                         <td><h6><b><u>LAMPIRAN KWITANSI</u></b></h6></td>
                     </tr>
                     <tr>
-                        <td><h6>No. 49/BPM A.NANI/08/2020</h6></td>
+                        <td><h6><?=$no_pembayaran?></h6></td>
                     </tr>
                     </table>
 
@@ -77,13 +80,13 @@ table tr td{vertical-align: top;}
                         <td colspan="3">Perincian pembayaran untuk keperluan Instalasi</td>
                     </tr>
                     <tr>
-                        <td width="25%">Nama</td><td> : </td><td>[Nama]</td>
+                        <td width="25%">Nama</td><td> : </td><td><?=$nama_pasien?></td>
                     </tr>
                     <tr>
-                        <td width="25%">Umur</td><td> : </td><td>[Umur]</td>
+                        <td width="25%">Umur</td><td> : </td><td><?=$umur?></td>
                     </tr>
                     <tr>
-                        <td width="25%">Alamat</td><td> : </td><td>[Alamat]</td>
+                        <td width="25%">Alamat</td><td> : </td><td><?=$alamat?></td>
                     </tr>
                     </table>
 
@@ -92,10 +95,10 @@ table tr td{vertical-align: top;}
                         <td colspan="3">  </td>
                     </tr>
                     <tr>
-                        <td width="40%">Masuk Tanggal</td><td class="center" width="3%"> : </td><td class="right" width="30%">[Masuk Tanggal]</td>
+                        <td width="40%">Masuk Tanggal</td><td class="center" width="3%"> : </td><td class="right" width="30%"><?=$tgl_masuk?></td>
                     </tr>
                     <tr>
-                        <td width="40%">Keluar Tanggal</td><td class="center" width="3%"> : </td><td class="right" width="30%">[Keluar Tanggal]</td>
+                        <td width="40%">Keluar Tanggal</td><td class="center" width="3%"> : </td><td class="right" width="30%"><?=$tgl_keluar?></td>
                     </tr>
                     </table>
 
@@ -107,76 +110,91 @@ table tr td{vertical-align: top;}
                     
                     <table style="margin-bottom: 20px;width:100%;" border="0">
                     <tr class="big-point">
-                        <td width="5%" class="right">1.</td><td width="3%" class="separator-w-20"></td><td width="70%" colspan="2"><b>Jasa Persalinan Bidan</b></td><td class="right">Rp.</td><td class="right">1.000.000</td>
-                    </tr>
-                    <tr>
-                        <td width="5%" class="right">2.</td><td width="3%" class="separator-w-20"></td><td width="70%" colspan="2"><b>Perawatan Ibu/Rawat Inap Kelas </b></td><td class="right">Rp.</td><td class="right">1.000.000</td>
-                    </tr>
-                    <tr>
-                        <td width="5%" class="right">3.</td><td width="3%" class="separator-w-20"></td><td width="70%" colspan="2"><b>Perawatan Bayi</b></td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right">1.</td><td width="3%" class="separator-w-20"></td><td width="70%" colspan="2"><b>Jasa <?=$jenis_layanan?></b></td><td class="right">Rp.</td><td class="right"><?=toRp($harga_layanan)?></td>
                     </tr>
                     <!-- Tindakan Khusus -->
                     <tr>
                         <td width="5%" class="right">4.</td><td width="3%" class="separator-w-20"></td><td colspan="4">Tindakan Khusus</td>
                     </tr>
+                    <?php
+                    foreach($tikhus as $tk){
+                    ?>
                     <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Rapid Test</td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td><?=$tk->tindakan_khusus?></td><td class="right">Rp.</td><td class="right"><?=toRp($tk->total)?></td>
                     </tr>
-                    <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Heacting</td><td class="right">Rp.</td><td class="right">1.000.000</td>
-                    </tr>
+                    <?php
+                    }
+                    ?>
                     <!-- End Tindakan Khusus -->
 
                     <!-- Obat-obatan -->
                     <tr>
                         <td width="5%" class="right">5.</td><td width="3%" class="separator-w-20"></td><td colspan="4">Obat-obatan</td>
                     </tr>
+                    <?php
+                    foreach($obat as $ob){
+                    ?>
                     <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Rapid Test</td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td><?=$ob->nama_obat.'('.$ob->jumlah.')@'.$ob->keterangan;?></td><td class="right">Rp.</td><td class="right"><?=toRp($ob->total)?></td>
                     </tr>
-                    <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Heacting</td><td class="right">Rp.</td><td class="right">1.000.000</td>
-                    </tr>
+                    <?php
+                    }
+                    ?>
                     <!-- End Obat-obatan -->
 
-                    <!-- Obat-obatan -->
+                    <!-- Bahan dan Alat -->
                     <tr>
                         <td width="5%" class="right">6.</td><td width="3%" class="separator-w-20"></td><td colspan="4">Bahan dan Alat</td>
                     </tr>
+                    <?php
+                    foreach($alkes as $ak){
+                    ?>
                     <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Rapid Test</td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td><?=$ak->nama_alkes.'('.$ak->jumlah.')@'.$ak->keterangan;?></td><td class="right">Rp.</td><td class="right"><?=toRp($ak->total)?></td>
                     </tr>
-                    <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Heacting</td><td class="right">Rp.</td><td class="right">1.000.000</td>
-                    </tr>
-                    <!-- End Obat-obatan -->
+                    <?php
+                    }
+                    ?>
+                    <!-- End Bahan dan Alat -->
 
                     <!-- Laboratorium-->
                     <tr>
-                        <td width="5%" class="right">7.</td><td width="3%" class="separator-w-20"></td><td width="70%" colspan="2">Pemeriksaan Laboratorium</td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right">7.</td><td width="3%" class="separator-w-20"></td><td colspan="4">Laboratorium</td>
                     </tr>
+                    <?php
+                    foreach($lab as $lb){
+                    ?>
+                    <tr>
+                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td><?=$lb->laboratorium?></td><td class="right">Rp.</td><td class="right"><?=toRp($lb->total)?></td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
                     <!-- End Laboratorium-->
 
                     <!-- Lain-lain -->
                     <tr>
                         <td width="5%" class="right">8.</td><td width="3%" class="separator-w-20"></td><td colspan="4">Lain-Lain</td>
                     </tr>
+                    <?php
+                    foreach($lainlain as $ll){
+                    ?>
                     <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Rapid Test</td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td><?=$ll->lainlain?></td><td class="right">Rp.</td><td class="right"><?=toRp($ll->total)?></td>
                     </tr>
-                    <tr>
-                        <td width="5%" class="right"> </td><td width="3%" class="separator-w-20"></td><td class="center">-</td><td>Heacting</td><td class="right">Rp.</td><td class="right">1.000.000</td>
-                    </tr>
+                    <?php
+                    }
+                    ?>
                     <!-- End Lain-lain -->
 
                     <!-- Total -->
                     <tr class="s-style" style="border-top: 2px solid;border-bottom: 2px solid;">
-                        <td width="5%" class="right" colspan="4"> Total </td><td class="right">Rp.</td><td class="right">1.000.000</td>
+                        <td width="5%" class="right" colspan="4"> Total </td><td class="right">Rp.</td><td class="right"><?=toRp($d_pmb->total)?></td>
                     </tr>
                     <!-- End Total -->
                     <!-- Total -->
                     <tr class="s-style">
-                        <td width="5%" colspan="7"> Terbilang : [Terbilang] </td>
+                        <td width="5%" colspan="7"> Terbilang : <?=strtoupper(terbilang($d_pmb->total))?> </td>
                     </tr>
                     <!-- End Total -->
 
@@ -186,7 +204,7 @@ table tr td{vertical-align: top;}
                     <table style="margin-bottom: 20px;width:100%" border="0">
                     <tr class="center">
                         <td width="60%"></td>
-                        <td width="40%">Makassar,20 Juli 2020<br>Yang Menerima,<br><br><br><br><br><br>....................................................</td>
+                        <td width="40%">Makassar,<?=tgl_indo($d_pmb->tgl)?><br>Yang Menerima,<br><br><br><br><br><br>....................................................</td>
                     </tr>
                     </table>
                     

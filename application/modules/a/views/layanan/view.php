@@ -33,6 +33,7 @@
                 <tr>
                   <th scope="col" class="text-center">No</th>
                   <th scope="col" class="text-center">Jenis Layanan</th>
+                  <th scope="col" class="">Harga</th>
                   <th scope="col" class="datatable-nosort text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -60,6 +61,12 @@
           <label class="col-sm-12">Jenis Layanan</label>
           <div class="col-sm-12 col-md-12">
             <input class="form-control" type="text" name="layanan" id="layanan" placeholder="Jenis Layanan" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-12">Harga</label>
+          <div class="col-sm-12 col-md-12">
+            <input class="form-control" type="text" name="harga" id="harga" onkeyup="javascript:this.value=autoseparator(this.value);" placeholder="0" required>
           </div>
         </div>
         </form>
@@ -155,6 +162,7 @@
             success : function(data) {
               $('#id').val(data.id);
               $('#layanan').val(data.layanan);
+              $('#harga').val(data.harga);
               $('.modal-load').hide();
             }
           });

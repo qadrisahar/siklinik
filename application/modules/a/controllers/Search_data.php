@@ -135,6 +135,30 @@ class Search_data extends CI_Controller {
 	        
 	        echo json_encode($table);
 		}
+
+		function data_lab_tindakan()
+	    {
+			$no_registrasi=$this->input->post('no_registrasi');
+			$this->db->select('id,laboratorium,total');
+			$this->db->from('layanan_lab')->where('no_registrasi',$no_registrasi)->order_by('w_insert','desc');
+			$tables=$this->db->get();
+			$output='';
+			$i=1;
+			$total=0;
+			foreach($tables->result() as $dt) {
+				$total+=$dt->total;
+				$output.='<tr>';
+				$output.='<td class="text-center">'.$i++.'</td>';
+				$output.='<td>'.$dt->laboratorium.'</td>';
+				$output.='<td>'.toRp($dt->total).'</td>';
+				$output.='<td class="text-center">'.'<span class="btn-action btn-action-delete delete-lab" data-id="'.$dt->id.'"><i class="fa fa-trash" aria-hidden="true"></i> Hapus </span>'.'</td>';
+				$output.='</tr>';
+			}
+			$table['table']=$output;
+			$table['total']=toRp($total);
+	        
+	        echo json_encode($table);
+		}
 		
 		function data_lainlain_tindakan()
 	    {

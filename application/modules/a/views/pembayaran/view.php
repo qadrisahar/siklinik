@@ -55,6 +55,16 @@
           <td> : </td>
           <td><?=$jenis_layanan?></td>
       </tr>
+      <tr>
+          <th scope="row">Tgl Masuk</th>
+          <td> : </td>
+          <td><?=$tgl_masuk?></td>
+      </tr>
+      <tr>
+          <th scope="row">Tgl Keluar</th>
+          <td> : </td>
+          <td><?=$tgl_keluar?></td>
+      </tr>
       </tbody>
   </table>
  </div>
@@ -102,6 +112,11 @@ error_reporting(0);
               </a>
           </li>
           <li class="nav-item">
+              <a role="tab" class="nav-link" id="tab_lab" data-toggle="tab" href="#tab_content_lab" aria-selected="false">
+                  <span>LABORATORIUM</span>
+              </a>
+          </li>
+          <li class="nav-item">
               <a role="tab" class="nav-link" id="tab_lainlain" data-toggle="tab" href="#tab_content_lainlain" aria-selected="false">
                   <span>LAIN LAIN</span>
               </a>
@@ -142,7 +157,7 @@ error_reporting(0);
                     </table>
                 </div>  
                 <div class="row justify-content-end">
-                  <label class="col-sm-2 mt-2">Total Biaya Obat</label>
+                  <label class="col-sm-2 mt-2 text-right">Total Biaya Obat</label>
                   <div class="col-md-3 col-sm-3">
                   <input class="form-control text-right font-weight-bold" type="text" name="total_obat" id="total_obat" value="0" placeholder="0" readonly>
                   </div>
@@ -178,7 +193,7 @@ error_reporting(0);
                     </table>
                 </div> 
                 <div class="row justify-content-end">
-                  <label class="col-sm-2 mt-2">Total Biaya Alkes</label>
+                  <label class="col-sm-2 mt-2 text-right">Total Biaya Alkes</label>
                   <div class="col-md-3 col-sm-3">
                   <input class="form-control text-right font-weight-bold" type="text" name="total_alkes" id="total_alkes" value="0" placeholder="0" readonly>
                   </div>
@@ -210,11 +225,43 @@ error_reporting(0);
                     </table>
                 </div>   
                 <div class="row justify-content-end">
-                  <label class="col-sm-2 mt-2">Total Biaya</label>
+                  <label class="col-sm-2 mt-2 text-right">Total Biaya</label>
                   <div class="col-md-3 col-sm-3">
                   <input class="form-control text-right font-weight-bold" type="text" name="total_tikhus" id="total_tikhus" value="0" placeholder="0" readonly>
                   </div>
                 </div> 
+        </div>
+        <div class="tab-pane tabs-animation fade" id="tab_content_lab" role="tabpanel">
+                <div class="table-action mb-2">
+                    <div class="text-right">
+                      <button type="button"  name="tambah-lab" id="tambah-lab"  data-toggle="modal" data-target="#modal-tambah-lab" class="btn-shadow btn btn-success">
+                          <span class="btn-icon-wrapper pr-2 opacity-7">
+                              <i class="fa fa-plus-circle fa-w-20"></i>
+                          </span>
+                          Tambah
+                      </button>
+                    </div>
+                </div> 
+                <div class="table-place-full">      
+                    <table class="table table-bordered dt-responsive nowrap table-striped table-hover" style="width:100%" id="t_lab">
+                        <thead class="thead-light">
+                        <tr>
+                          <th scope="col" class="text-center">No</th>
+                          <th scope="col" class="text-center">Laboratorium</th>
+                          <th scope="col" class="text-center">Total</th>
+                          <th scope="col" class="datatable-nosort text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>                          
+                        </tbody>
+                    </table>
+                </div>  
+                <div class="row justify-content-end">
+                  <label class="col-sm-2 mt-2 text-right">Total Biaya</label>
+                  <div class="col-md-3 col-sm-3">
+                  <input class="form-control text-right font-weight-bold" type="text" name="total_lab" id="total_lab" value="0" placeholder="0" readonly>
+                  </div>
+                </div>  
         </div>
         <div class="tab-pane tabs-animation fade" id="tab_content_lainlain" role="tabpanel">
                 <div class="table-action mb-2">
@@ -242,7 +289,7 @@ error_reporting(0);
                     </table>
                 </div>  
                 <div class="row justify-content-end">
-                  <label class="col-sm-2 mt-2">Total Biaya</label>
+                  <label class="col-sm-2 mt-2 text-right">Total Biaya</label>
                   <div class="col-md-3 col-sm-3">
                   <input class="form-control text-right font-weight-bold" type="text" name="total_lainlain" id="total_lainlain" value="0" placeholder="0" readonly>
                   </div>
@@ -250,11 +297,17 @@ error_reporting(0);
         </div>
         <hr>
         <div class="row justify-content-end mt-3">
-            <label class="col-sm-2 mt-2">Grand Total</label>
+            <label class="col-sm-3 text-right mt-2">Biaya <?=$jenis_layanan?></label>
+            <div class="col-md-3 col-sm-3">
+            <input class="form-control text-right font-weight-bold" type="text" name="jasa" id="jasa" placeholder="0" value="<?=toRp($harga_layanan)?>" readonly>
+            </div>
+        </div>
+        <div class="row justify-content-end mt-3">
+            <label class="col-sm-3 text-right mt-2">Grand Total</label>
             <div class="col-md-3 col-sm-3">
             <input class="form-control text-right font-weight-bold" type="text" name="grand_total" id="grand_total" placeholder="0" value="0" readonly style="font-size: 26px;">
             </div>
-          </div> 
+        </div> 
       </div> 
     </div>
 </div>
@@ -499,6 +552,49 @@ error_reporting(0);
   </div>
 </div>
 
+<div class="modal fade mt-3" id="modal-tambah-lab" role="dialog" aria-labelledby="modal-lab" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-lab">Data Laboratorium</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+        <div class="buttonload modal-load">
+                <i class="fa fa-spinner fa-spin modal-load-spinner"></i>
+        </div>
+      <div class="modal-body">
+        <form name="form-lab" id="form-lab" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label class="col-sm-12">Laboratorium</label>
+                  <div class="col-sm-12 col-md-12">
+                    <input class="form-control" type="text" name="laboratorium" id="laboratorium" placeholder="Laboratorium" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12">Total</label>
+                  <div class="col-sm-12 col-md-12">
+                    <input class="form-control" type="text" name="total_lab" id="total_lab" onkeyup="javascript:this.value=autoseparator(this.value);" placeholder="0" required>
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-md" name="simpan_lab" id="simpan_lab">
+              <i class="fa fa-save"></i> Simpan 
+          </button>
+          <button type="button" class="btn btn-danger btn-md" data-dismiss="modal">
+          <i class="fa fa-ban"></i> Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade mt-3" id="modal-tambah-lainlain" role="dialog" aria-labelledby="modal-lainlain" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -550,6 +646,7 @@ error_reporting(0);
       table_alkes();
       table_tikhus();
       table_lainlain();
+      table_lab();
       grand_total();
       <?php
       foreach($tab_id as $k_tab => $v_tab )
@@ -671,6 +768,35 @@ error_reporting(0);
 
           });
 
+          $("#simpan_lab").click(function(e) {
+            e.preventDefault();
+            if($('#form-lab').parsley().validate()){
+              var param = this;
+                process1(param);
+              var form = $("#form-lab")[0];
+              var form_data = new FormData(form);
+			        form_data.append("no_registrasi", '<?=$no_registrasi?>');
+              $.ajax({
+                type    : 'POST',
+                data    : form_data,
+                contentType : false,
+                processData : false,
+                cache: false,
+                async:true,
+                url     : "<?php echo site_url('a_tindakan/simpan_lab');?>",
+                success : function(data) {
+                  table_lab();
+                  process_done1(param,'<i class="fa fa-save"></i> Simpan');      
+                  Swal.fire('Sukses!',data,'success');
+                  $('#modal-tambah-lab').modal('hide');
+                }
+              });
+            }else {
+              return false();
+            }
+
+          });
+
           $("#simpan_lainlain").click(function(e) {
             e.preventDefault();
             if($('#form-lainlain').parsley().validate()){
@@ -715,6 +841,12 @@ error_reporting(0);
       $("#tambah-tikhus").click(function() {
         $('#form-tikhus').parsley().reset();
         $('#form-tikhus')[0].reset(); 
+        $('.modal-load').hide(); 
+      });
+
+      $("#tambah-lab").click(function() {
+        $('#form-lab').parsley().reset();
+        $('#form-lab')[0].reset(); 
         $('.modal-load').hide(); 
       });
 
@@ -820,6 +952,38 @@ error_reporting(0);
 
         });
 
+        $('#t_lab').on( 'click', 'tr .delete-lab', function () {
+          var id = $(this).data("id");
+          Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini?',
+                text: "Periksa kembali data tersebut!",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Tidak'
+                }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type    : 'POST',
+                        data    : {id:id},
+                        url     : "<?php echo site_url('a_tindakan/hapus_lab');?>",
+                        success : function(data) {
+                            Swal.fire('Sukses!','Data tersebut berhasil dihapus.','success');
+                            table_lab();
+                        },
+                        error : function(){
+                            Swal.fire("Eror", "Terjadi kesalahan", "error");
+                        }
+                    });
+                }
+                })   
+
+        });
+
         $('#t_lainlain').on( 'click', 'tr .delete-lainlain', function () {
           var id = $(this).data("id");
           Swal.fire({
@@ -862,22 +1026,24 @@ error_reporting(0);
                 showLoaderOnConfirm: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus',
+                confirmButtonText: 'Ya, Proses',
                 cancelButtonText: 'Tidak'
                 }).then((result) => {
                 if (result.value) {
+                   var total=$("#grand_total").val();
                     $.ajax({
                         type    : 'POST',
-                        data    : {id:'<?=$no_registrasi?>'},
+                        data    : {id:'<?=$no_registrasi?>',total:total},
                         url     : "<?php echo site_url('a_pembayaran/proses_selesai');?>",
+                        dataType : 'json',
                         success : function(data) {
                             Swal.fire({
                                   title: "Sukses!",
-                                  text: data,
+                                  text: "Data Selesai DiProses",
                                   type: "success",
                                   timer: 2000
                               }).then((result) => {
-                                location.replace("<?=base_url()?>a_pembayaran/cetak_kwitansi?id=xx");
+                                location.replace("<?=base_url()?>a_pembayaran/cetak_kwitansi?id="+btoa(data.id)+"&id2="+btoa(data.id2));
                               });
                         },
                         error : function(){
@@ -934,6 +1100,20 @@ error_reporting(0);
           });
     }
 
+    function table_lab(){
+      $.ajax({
+            type    : 'POST',
+            data    : {no_registrasi:'<?=$no_registrasi?>'},
+            url     : "<?php echo site_url('search_data/data_lab_tindakan');?>",
+            dataType: 'json',
+            success : function(data) {
+              $('#t_lab tbody').html(data.table);
+              $("#total_lab").val(data.total);
+              grand_total();
+            }
+          });
+    }
+
     function table_lainlain(){
       $.ajax({
             type    : 'POST',
@@ -952,8 +1132,9 @@ error_reporting(0);
       var total_obat=parseInt(removeSeparator($("#total_obat").val()));
       var total_alkes=parseInt(removeSeparator($("#total_alkes").val()));
       var total_tikhus=parseInt(removeSeparator($("#total_tikhus").val()));
+      var total_lab=parseInt(removeSeparator($("#total_lab").val()));
       var total_lainlain=parseInt(removeSeparator($("#total_lainlain").val()));
-      var total=total_obat+total_tikhus+total_lainlain+total_alkes;
+      var total=total_obat+total_tikhus+total_lainlain+total_alkes+total_lab+<?=$harga_layanan?>;
       $("#grand_total").val(autoseparator(total));
     }
   </script>

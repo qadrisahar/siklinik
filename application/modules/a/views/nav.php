@@ -59,7 +59,7 @@ if($pembyr_neks>0){
                 ?>
                 <li class="app-sidebar__heading">Dashboard</li>
                  <li>
-                    <a href="<?=base_url().'a_dashboard_ds'?>" class="navigation-list">
+                    <a href="<?=base_url().'a_dashboard'?>" class="navigation-list">
                         <i class="metismenu-icon pe-7s-display1"></i>
                         Dashboard
                     </a>

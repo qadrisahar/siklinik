@@ -3,7 +3,7 @@
 class M_layanan extends CI_Model {
 
     var $table = 'layanan ly'; //nama tabel dari database
-    var $select = array('ly.id_layanan', 'ly.layanan');
+    var $select = array('ly.id_layanan', 'ly.layanan','ly.harga');
     var $column_order = array(null,'ly.layanan');
     var $column_search = array('ly.layanan');
     var $order = array('ly.layanan' => 'asc');

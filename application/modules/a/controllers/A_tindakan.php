@@ -202,6 +202,32 @@ class A_tindakan extends CI_Controller {
 
 				}
 
+				public function simpan_lab()
+				{
+					$cek=$this->session->userdata('status');
+					$level=$this->session->userdata('level');
+					if($cek=='lginx' && $level=='mn'){
+						    error_reporting(0);
+								date_default_timezone_set('Asia/Makassar');
+								$key=$this->input->post('id');
+								$laboratorium=$this->input->post('laboratorium');
+								$total=RptoDb($this->input->post('total_lab'));
+								$no_registrasi= $this->input->post('no_registrasi');
+
+								$dt['laboratorium'] = $laboratorium;
+								$dt['total'] =$total;
+								$dt['no_registrasi'] =$no_registrasi;
+								$dt['updated_by'] = $this->session->userdata('id_user');
+								$dt['id'] = 'ID-'.uniqid();
+								$dt['w_insert'] =date('Y-m-d H:i:s');
+								$this->db->insert('layanan_lab',$dt);
+								echo "Data Sukses DiSimpan";
+					}else {
+						  redirect('login/logout');
+					}
+
+				}
+
 				public function simpan_lainlain()
 				{
 					$cek=$this->session->userdata('status');
@@ -275,6 +301,21 @@ class A_tindakan extends CI_Controller {
 
 						}
 
+						public function hapus_lab()
+						{
+							error_reporting(0);
+							$cek=$this->session->userdata('status');
+							$level=$this->session->userdata('level');
+							if($cek=='lginx' && $level=='mn'){
+										$id['id'] = $this->input->post('id');
+										$this->db->delete('layanan_lab',$id);
+										echo "Data Sukses Dihapus";
+							}else {
+								  redirect('login/logout');
+							}
+
+						}
+
 						public function hapus_lainlain()
 						{
 							error_reporting(0);
@@ -298,6 +339,8 @@ class A_tindakan extends CI_Controller {
 							if($cek=='lginx' && $level=='mn'){
 										$id['no_registrasi'] = $this->input->post('id');
 										$dt['eksekusi']='y';
+										$dt['tgl_masuk']=$this->input->post('tgl_masuk');
+										$dt['tgl_keluar']=$this->input->post('tgl_keluar');
 										$this->db->update('registrasi',$dt,$id);
 										echo "Data Telah Diteruskan Ke Kasir";
 							}else {

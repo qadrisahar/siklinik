@@ -60,8 +60,24 @@
  </div>
 </div>
 <hr>
-<div class="row pr-4 text-right">
-  <div class="col-12">
+<div class="row pr-4 pl-4">
+  <div class="col-4">
+              <div class="form-group row">
+                  <label class="col-md-4 mt-2">Tgl Masuk</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="date" name="tgl_masuk" id="tgl_masuk" value="<?=date('Y-m-d')?>" placeholder="dd/mm/yyyy">
+                  </div>
+                </div>
+  </div>
+  <div class="col-4">
+              <div class="form-group row">
+                  <label class="col-md-4 mt-2">Tgl Keluar</label>
+                  <div class="col-md-8">
+                    <input class="form-control" type="date" name="tgl_keluar" id="tgl_keluar" value="<?=date('Y-m-d')?>" placeholder="dd/mm/yyyy">
+                  </div>
+                </div>
+  </div>
+  <div class="col-4 text-right">
         <button type="button" class="btn btn-warning btn-md" name="done" id="done">
             <i class="fa fa-check-circle"></i> Proses Ke Kasir
         </button>
@@ -116,6 +132,11 @@ error_reporting(0);
           <li class="nav-item">
               <a role="tab" class="nav-link" id="tab_tikhus" data-toggle="tab" href="#tab_content_tikhus" aria-selected="false">
                   <span>TINDAKAN KHUSUS</span>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a role="tab" class="nav-link" id="tab_lab" data-toggle="tab" href="#tab_content_lab" aria-selected="false">
+                  <span>LABORATORIUM</span>
               </a>
           </li>
           <li class="nav-item">
@@ -279,6 +300,32 @@ error_reporting(0);
                         <tr>
                           <th scope="col" class="text-center">No</th>
                           <th scope="col" class="text-center">Tindakan Khusus</th>
+                          <th scope="col" class="text-center">Total</th>
+                          <th scope="col" class="datatable-nosort text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>                          
+                        </tbody>
+                    </table>
+                </div>   
+        </div>
+        <div class="tab-pane tabs-animation fade" id="tab_content_lab" role="tabpanel">
+                <div class="table-action mb-2">
+                    <div class="text-right">
+                      <button type="button"  name="tambah-lab" id="tambah-lab"  data-toggle="modal" data-target="#modal-tambah-lab" class="btn-shadow btn btn-success">
+                          <span class="btn-icon-wrapper pr-2 opacity-7">
+                              <i class="fa fa-plus-circle fa-w-20"></i>
+                          </span>
+                          Tambah
+                      </button>
+                    </div>
+                </div> 
+                <div class="table-place-full">      
+                    <table class="table table-bordered dt-responsive nowrap table-striped table-hover" style="width:100%" id="t_lab">
+                        <thead class="thead-light">
+                        <tr>
+                          <th scope="col" class="text-center">No</th>
+                          <th scope="col" class="text-center">Laboratorium</th>
                           <th scope="col" class="text-center">Total</th>
                           <th scope="col" class="datatable-nosort text-center">Aksi</th>
                         </tr>
@@ -558,6 +605,49 @@ error_reporting(0);
   </div>
 </div>
 
+<div class="modal fade mt-3" id="modal-tambah-lab" role="dialog" aria-labelledby="modal-lab" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-lab">Data Laboratorium</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+        <div class="buttonload modal-load">
+                <i class="fa fa-spinner fa-spin modal-load-spinner"></i>
+        </div>
+      <div class="modal-body">
+        <form name="form-lab" id="form-lab" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label class="col-sm-12">Laboratorium</label>
+                  <div class="col-sm-12 col-md-12">
+                    <input class="form-control" type="text" name="laboratorium" id="laboratorium" placeholder="Laboratorium" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12">Total</label>
+                  <div class="col-sm-12 col-md-12">
+                    <input class="form-control" type="text" name="total_lab" id="total_lab" onkeyup="javascript:this.value=autoseparator(this.value);" placeholder="0" required>
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-md" name="simpan_lab" id="simpan_lab">
+              <i class="fa fa-save"></i> Simpan 
+          </button>
+          <button type="button" class="btn btn-danger btn-md" data-dismiss="modal">
+          <i class="fa fa-ban"></i> Batal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade mt-3" id="modal-tambah-lainlain" role="dialog" aria-labelledby="modal-lainlain" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -608,6 +698,7 @@ error_reporting(0);
       table_obat();
       table_alkes();
       table_tikhus();
+      table_lab();
       table_lainlain();
       <?php
       foreach($tab_id as $k_tab => $v_tab )
@@ -729,6 +820,35 @@ error_reporting(0);
 
           });
 
+          $("#simpan_lab").click(function(e) {
+            e.preventDefault();
+            if($('#form-lab').parsley().validate()){
+              var param = this;
+                process1(param);
+              var form = $("#form-lab")[0];
+              var form_data = new FormData(form);
+			        form_data.append("no_registrasi", '<?=$no_registrasi?>');
+              $.ajax({
+                type    : 'POST',
+                data    : form_data,
+                contentType : false,
+                processData : false,
+                cache: false,
+                async:true,
+                url     : "<?php echo site_url('a_tindakan/simpan_lab');?>",
+                success : function(data) {
+                  table_lab();
+                  process_done1(param,'<i class="fa fa-save"></i> Simpan');      
+                  Swal.fire('Sukses!',data,'success');
+                  $('#modal-tambah-lab').modal('hide');
+                }
+              });
+            }else {
+              return false();
+            }
+
+          });
+
           $("#simpan_lainlain").click(function(e) {
             e.preventDefault();
             if($('#form-lainlain').parsley().validate()){
@@ -773,6 +893,12 @@ error_reporting(0);
       $("#tambah-tikhus").click(function() {
         $('#form-tikhus').parsley().reset();
         $('#form-tikhus')[0].reset(); 
+        $('.modal-load').hide(); 
+      });
+
+      $("#tambah-lab").click(function() {
+        $('#form-lab').parsley().reset();
+        $('#form-lab')[0].reset(); 
         $('.modal-load').hide(); 
       });
 
@@ -878,6 +1004,38 @@ error_reporting(0);
 
         });
 
+        $('#t_lab').on( 'click', 'tr .delete-lab', function () {
+          var id = $(this).data("id");
+          Swal.fire({
+                title: 'Anda yakin ingin menghapus data ini?',
+                text: "Periksa kembali data tersebut!",
+                type: 'warning',
+                allowOutsideClick: false,
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Tidak'
+                }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type    : 'POST',
+                        data    : {id:id},
+                        url     : "<?php echo site_url('a_tindakan/hapus_lab');?>",
+                        success : function(data) {
+                            Swal.fire('Sukses!','Data tersebut berhasil dihapus.','success');
+                            table_lab();
+                        },
+                        error : function(){
+                            Swal.fire("Eror", "Terjadi kesalahan", "error");
+                        }
+                    });
+                }
+                })   
+
+        });
+
         $('#t_lainlain').on( 'click', 'tr .delete-lainlain', function () {
           var id = $(this).data("id");
           Swal.fire({
@@ -920,13 +1078,13 @@ error_reporting(0);
                 showLoaderOnConfirm: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus',
+                confirmButtonText: 'Ya, Proses',
                 cancelButtonText: 'Tidak'
                 }).then((result) => {
                 if (result.value) {
                     $.ajax({
                         type    : 'POST',
-                        data    : {id:'<?=$no_registrasi?>'},
+                        data    : {id:'<?=$no_registrasi?>',tgl_masuk:$("#tgl_masuk").val(),tgl_keluar:$("#tgl_keluar").val()},
                         url     : "<?php echo site_url('a_tindakan/proses_to_kasir');?>",
                         success : function(data) {
                             Swal.fire({
@@ -982,6 +1140,18 @@ error_reporting(0);
             dataType: 'json',
             success : function(data) {
               $('#t_tikhus tbody').html(data.table);
+            }
+          });
+    }
+
+    function table_lab(){
+      $.ajax({
+            type    : 'POST',
+            data    : {no_registrasi:'<?=$no_registrasi?>'},
+            url     : "<?php echo site_url('search_data/data_lab_tindakan');?>",
+            dataType: 'json',
+            success : function(data) {
+              $('#t_lab tbody').html(data.table);
             }
           });
     }

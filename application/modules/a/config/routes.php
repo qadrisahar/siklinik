@@ -8,9 +8,7 @@ $route['login/logout'] = 'a/login/logout';
 
 $route['a_home'] = 'a/a_home';
 $route['a_dashboard'] = 'a/a_dashboard';
-$route['a_dashboard_ds'] = 'a/a_dashboard_ds';
-$route['a_dashboard_kc'] = 'a/a_dashboard_kc';
-$route['a_dashboard_kb'] = 'a/a_dashboard_kb';
+$route['a_dashboard/check'] = 'a/a_dashboard/check';
 
 /*Search Data*/
 $route['search_data/cari_obat'] = 'a/search_data/cari_obat';
@@ -18,6 +16,7 @@ $route['search_data/cari_alkes'] = 'a/search_data/cari_alkes';
 $route['search_data/data_obat_tindakan'] = 'a/search_data/data_obat_tindakan';
 $route['search_data/data_alkes_tindakan'] = 'a/search_data/data_alkes_tindakan';
 $route['search_data/data_tikhus_tindakan'] = 'a/search_data/data_tikhus_tindakan';
+$route['search_data/data_lab_tindakan'] = 'a/search_data/data_lab_tindakan';
 $route['search_data/data_lainlain_tindakan'] = 'a/search_data/data_lainlain_tindakan';
 /*End Search Data*/
 
@@ -203,10 +202,12 @@ $route['a_tindakan/simpan'] = 'a/a_tindakan/simpan';
 $route['a_tindakan/simpan_obat'] = 'a/a_tindakan/simpan_obat';
 $route['a_tindakan/simpan_alkes'] = 'a/a_tindakan/simpan_alkes';
 $route['a_tindakan/simpan_tikhus'] = 'a/a_tindakan/simpan_tikhus';
+$route['a_tindakan/simpan_lab'] = 'a/a_tindakan/simpan_lab';
 $route['a_tindakan/simpan_lainlain'] = 'a/a_tindakan/simpan_lainlain';
 $route['a_tindakan/hapus_obat'] = 'a/a_tindakan/hapus_obat';
 $route['a_tindakan/hapus_alkes'] = 'a/a_tindakan/hapus_alkes';
 $route['a_tindakan/hapus_tikhus'] = 'a/a_tindakan/hapus_tikhus';
+$route['a_tindakan/hapus_lab'] = 'a/a_tindakan/hapus_lab';
 $route['a_tindakan/hapus_lainlain'] = 'a/a_tindakan/hapus_lainlain';
 $route['a_tindakan/hapus'] = 'a/a_tindakan/hapus';
 $route['a_tindakan/proses_to_kasir'] = 'a/a_tindakan/proses_to_kasir';
@@ -279,8 +280,6 @@ $route['a_pembayaran_neks'] = 'a/a_pembayaran_neks';
 $route['a_pembayaran_neks/get_pembayaran_neks'] = 'a/a_pembayaran_neks/get_pembayaran_neks';
 $route['a_pembayaran_neks/cari_pembayaran_neks'] = 'a/a_pembayaran_neks/cari_pembayaran_neks';
 /*End Pembayaran Belum Dieksekusi*/
-<<<<<<< HEAD
-=======
 
 /*Data Pasien*/
 $route['a_data_pasien'] = 'a/a_data_pasien';
@@ -289,4 +288,3 @@ $route['a_data_pasien/simpan'] = 'a/a_data_pasien/simpan';
 $route['a_data_pasien/cari_data_pasien'] = 'a/a_data_pasien/cari_data_pasien';
 $route['a_data_pasien/hapus'] = 'a/a_data_pasien/hapus';
 /*End Data Pasien*/
->>>>>>> 33d25ea84eba44a4f701b75acff8287f97590638

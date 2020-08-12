@@ -33,6 +33,7 @@ class A_layanan extends CI_Controller {
 	            $row = array();
 	            $row[] = '<center>'.$no.'</center>';
 				$row[] = $dt->layanan;
+				$row[] = toRp($dt->harga);
 				$row[] =  '<center>
 					<a href="#" class="btn-action edit" data-id="'.$dt->id_layanan.'" data-toggle="modal" data-target="#modal-tambah"><i class="fa fa-edit" aria-hidden="true"></i> Edit </a>
 					<a href="'.base_url().'a_layanan_data?id='.base64_encode($dt->id_layanan).'" class="btn-action btn-action-warning"><i class="fa fa-edit" aria-hidden="true"></i> Data Layanan </a>
@@ -64,6 +65,7 @@ class A_layanan extends CI_Controller {
 								foreach ($q->result() as $dt) {
                                     $d['id']=$dt->id_layanan;
                                     $d['layanan']=$dt->layanan;
+                                    $d['harga']=toRp($dt->harga);
                                 }
 								echo json_encode($d);
 					}else {
@@ -82,6 +84,7 @@ class A_layanan extends CI_Controller {
 								$key=$this->input->post('id');
 								$id['id_layanan'] = $key;
 								$dt['layanan'] = $this->input->post('layanan');
+								$dt['harga'] = RptoDb($this->input->post('harga'));
 								$dt['updated_by'] = $this->session->userdata('id_user');
 
 								$q=$this->db->get_where('layanan',$id)->num_rows();
